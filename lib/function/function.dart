@@ -10,15 +10,30 @@ class Stater with ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
   Map<String, List> data = {
     formatToyMEd(DateTime.now()): ["Meaw"],
+    formatToyMEd(DateTime(2022)): ["Meaw"],
   };
-
-  List<DateTime> dateMark = [
-    DateFormat.yMEd().parse(formatToyMEd(DateTime.now())),
-    DateTime(2023)
-  ];
+  List<DateTime> dateMark = [];
 
   String selectDateString() {
     return DateFormat("EEE วันที่ d MMM yyyy").format(selectDate);
+  }
+
+  bool isSelectDayAvailable() {
+    return isSelectDayAvailablefn(formatToyMEd(selectDate));
+  }
+
+  void addDateAndData(String date, dataAdd) {
+    data = {
+      ...data,
+      date: [dataAdd]
+    };
+    dateMark.add(DateFormat.yMEd().parse(date));
+    notifyListeners();
+  }
+
+  void addDataInDate(String date, dataAdd) {
+    data[date]?.add(dataAdd);
+    notifyListeners();
   }
 
   void changeSelectDate(DateTime newDate) {

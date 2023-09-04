@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:incomeandexpensesapp/function/extension.dart';
 import 'package:provider/provider.dart';
 import '.././function/function.dart';
 
@@ -15,11 +15,11 @@ class _DataListState extends State<DataList> {
   Widget build(BuildContext context) {
     Map<String, List> data = context.watch<Stater>().data;
     DateTime selectDate = context.watch<Stater>().selectDate;
-    String selectDateINData = DateFormat.yMEd().format(selectDate);
+    String selectDateINData = formatToyMEd(selectDate);
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.only(top: 0),
-      child: data[DateFormat.yMEd().format(selectDate)] != null
+      child: context.read<Stater>().isSelectDayAvailable()
           ? ListView.builder(
               itemCount: data[selectDateINData]?.length,
               itemBuilder: (BuildContext context, int index) {

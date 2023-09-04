@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/component/adddatapage.dart';
 
 import 'package:provider/provider.dart';
 import './function/function.dart';
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const Column(children: [Calender(), DataList()]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          debugPrint("${DateTime(2023)}");
+          showDialog(context: context, builder: (_) => const AddDataPage());
         },
         tooltip: 'Add',
         child: const Icon(Icons.add),
