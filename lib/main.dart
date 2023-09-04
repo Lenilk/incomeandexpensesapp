@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import './function/function.dart';
 
@@ -45,14 +46,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(Provider.of<Stater>(context).selectDateString()),
+        title: Center(
+            child: Text(Provider.of<Stater>(context).selectDateString())),
       ),
-      drawer: const Drawer(),
-      body: const Column(
-        children: [Calender()],
-      ),
+      body: const Column(children: [Calender(), DataList()]),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          debugPrint("${DateTime(2023)}");
+        },
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
