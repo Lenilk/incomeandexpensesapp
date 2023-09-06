@@ -8,31 +8,44 @@ class Stater with ChangeNotifier {
   List todo = [];
   DateTime selectDate = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.month;
-  Map<String, List> data = {
-    formatToyMEd(DateTime.now()): ["Meaw"],
-    formatToyMEd(DateTime(2022)): ["Meaw"],
-  };
+  List<Map<String, dynamic>> data = [
+    // {
+    //   "Date": formatToyMEd(DateTime.now()),
+    //   "data": [
+    //     {"info": "Meaw", "amount": "5"}
+    //   ]
+    // }
+  ];
   List<DateTime> dateMark = [];
+  int whereday = 0;
+  String selectDateTitle() {
+    return DateFormat("EEE วันที่ d MMM yyyy").format(selectDate);
+  }
 
   String selectDateString() {
-    return DateFormat("EEE วันที่ d MMM yyyy").format(selectDate);
+    return formatToyMEd(selectDate);
   }
 
   bool isSelectDayAvailable() {
     return isSelectDayAvailablefn(formatToyMEd(selectDate));
   }
 
-  void addDateAndData(String date, dataAdd) {
-    data = {
-      ...data,
-      date: [dataAdd]
-    };
-    dateMark.add(DateFormat.yMEd().parse(date));
+  void addDateAndData(String date, Map<String, String> dataAdd) {
+    data.add({
+      "Date": date,
+      "data": [dataAdd]
+    });
+    dateMark.add(DateFormat.yMd().parse(date));
+    debugPrint(data.toString());
     notifyListeners();
   }
 
-  void addDataInDate(String date, dataAdd) {
-    data[date]?.add(dataAdd);
+  void addDataInDate(String date, Map<String, String> dataAdd) {
+    whereday = data.indexWhere((json) => json["Date"] == date);
+    debugPrint(whereday.toString());
+    List<Map<String, String>> datalist = data[whereday]["data"];
+    debugPrint(datalist.toString());
+    datalist.add(dataAdd);
     notifyListeners();
   }
 

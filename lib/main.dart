@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:incomeandexpensesapp/component/adddatapage.dart';
+import 'package:incomeandexpensesapp/component/choicepage.dart';
 
 import 'package:provider/provider.dart';
 import './function/function.dart';
-
+import './function/extension.dart';
 import 'component/component.dart';
 
 void main() {
@@ -44,16 +44,34 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> data = context.watch<Stater>().data;
+    String selectDateINData =
+        Provider.of<Stater>(context, listen: true).selectDateString();
+    int whereday = Provider.of<Stater>(context, listen: false)
+        .data
+        .indexWhere((json) => json["Date"] == selectDateINData);
+    bool isDayAvailable = Provider.of<Stater>(context, listen: true)
+        .data
+        .where((element) => element["Date"] == selectDateINData)
+        .isNotEmpty;
+    List datalist = isDayAvailable ? data[whereday]["data"] : [];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(
-            child: Text(Provider.of<Stater>(context).selectDateString())),
+        title:
+            Center(child: Text(Provider.of<Stater>(context).selectDateTitle())),
       ),
-      body: const Column(children: [Calender(), DataList()]),
+      body: Column(children: [
+        const Calender(),
+        DataList(
+          data: datalist,
+          isAvailable: isDayAvailable,
+        )
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog(context: context, builder: (_) => const AddDataPage());
+          showDialog(context: context, builder: (_) => const ChoicePage());
+          debugPrint(whereDateInData(selectDateINData).toString());
         },
         tooltip: 'Add',
         child: const Icon(Icons.add),
