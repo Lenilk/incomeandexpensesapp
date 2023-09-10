@@ -23,11 +23,11 @@ class Stater with ChangeNotifier {
   }
 
   String selectDateString() {
-    return formatToyMEd(selectDate);
+    return formatToyMd(selectDate);
   }
 
   bool isSelectDayAvailable(BuildContext context) {
-    return isSelectDayAvailablefn(formatToyMEd(selectDate), context);
+    return isSelectDayAvailablefn(formatToyMd(selectDate), context);
   }
 
   void addDateAndData(String date, Map<String, String> dataAdd) {

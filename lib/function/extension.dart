@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import './function.dart';
 import 'package:provider/provider.dart';
 
-String formatToyMEd(DateTime date) {
+String formatToyMd(DateTime date) {
   return DateFormat.yMd().format(date);
 }
 
