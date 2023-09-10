@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -26,8 +26,8 @@ class Stater with ChangeNotifier {
     return formatToyMEd(selectDate);
   }
 
-  bool isSelectDayAvailable() {
-    return isSelectDayAvailablefn(formatToyMEd(selectDate));
+  bool isSelectDayAvailable(BuildContext context) {
+    return isSelectDayAvailablefn(formatToyMEd(selectDate), context);
   }
 
   void addDateAndData(String date, Map<String, String> dataAdd) {

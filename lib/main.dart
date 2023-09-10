@@ -47,13 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Map<String, dynamic>> data = context.watch<Stater>().data;
     String selectDateINData =
         Provider.of<Stater>(context, listen: true).selectDateString();
-    int whereday = Provider.of<Stater>(context, listen: false)
-        .data
-        .indexWhere((json) => json["Date"] == selectDateINData);
-    bool isDayAvailable = Provider.of<Stater>(context, listen: true)
-        .data
-        .where((element) => element["Date"] == selectDateINData)
-        .isNotEmpty;
+    int whereday = whereDateInData(selectDateINData, context);
+    bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
     List datalist = isDayAvailable ? data[whereday]["data"] : [];
     return Scaffold(
       appBar: AppBar(
@@ -63,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(children: [
         const Calender(),
-        DataList(
+        Datalist(
           data: datalist,
           isAvailable: isDayAvailable,
         )
@@ -71,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(context: context, builder: (_) => const ChoicePage());
-          debugPrint(whereDateInData(selectDateINData).toString());
+          debugPrint(whereDateInData(selectDateINData, context).toString());
         },
         tooltip: 'Add',
         child: const Icon(Icons.add),
