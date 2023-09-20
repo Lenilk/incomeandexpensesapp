@@ -67,8 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           showDialog(
               context: context,
-              builder: (_) => const ChoicePage(),
-              barrierDismissible: false);
+              builder: (_) => const ChoicePage(),);
           debugPrint(whereDateInData(selectDateINData, context).toString());
         },
         tooltip: 'Add',

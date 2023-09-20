@@ -21,6 +21,9 @@ class _CalenderState extends State<Calender> {
       firstDay: pastyear,
       lastDay: nextyear,
       focusedDay: focusDay,
+      availableCalendarFormats: const {
+        CalendarFormat.month: 'Month',
+      },
       rowHeight: 30,
       onDaySelected: (selectedDay, focusedDay) {
         Provider.of<Stater>(context, listen: false)

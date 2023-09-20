@@ -26,7 +26,6 @@ class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     bool isincome = widget.isincome;
-    int maxLine = 2;
     return AlertDialog(
       title: Center(child: Text(isincome ? "รายรับ" : "รายจ่าย")),
       scrollable: true,
