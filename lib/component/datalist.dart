@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class Datalist extends StatelessWidget {
   final bool isAvailable;
   final List data;

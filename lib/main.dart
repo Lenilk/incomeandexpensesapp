@@ -65,7 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog(context: context, builder: (_) => const ChoicePage());
+          showDialog(
+              context: context,
+              builder: (_) => const ChoicePage(),
+              barrierDismissible: false);
           debugPrint(whereDateInData(selectDateINData, context).toString());
         },
         tooltip: 'Add',

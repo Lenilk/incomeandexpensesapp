@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import '.././function/function.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({Key? key, required bool isincome}) : super(key: key);
+  final bool isincome;
+  const AddPage({Key? key, required this.isincome}) : super(key: key);
 
   @override
   State<AddPage> createState() => _AddPageState();
@@ -15,13 +16,22 @@ class _AddPageState extends State<AddPage> {
   final noteEditer = TextEditingController();
   final _form = GlobalKey<FormState>();
   @override
+  void dispose() {
+    infoEditer.dispose();
+    amountEditer.dispose();
+    noteEditer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool isincome = widget.isincome;
+    int maxLine = 2;
     return AlertDialog(
-      title: const Text("รายรับ"),
+      title: Center(child: Text(isincome ? "รายรับ" : "รายจ่าย")),
       scrollable: true,
       actionsAlignment: MainAxisAlignment.spaceBetween,
       content: SizedBox(
-        height: 200,
         child: Form(
             key: _form,
             child: Column(
@@ -50,7 +60,6 @@ class _AddPageState extends State<AddPage> {
                 TextFormField(
                   controller: noteEditer,
                   decoration: const InputDecoration(hintText: "หมายเหตุ"),
-                  minLines: 1,
                   maxLines: 3,
                 ),
               ],
@@ -74,7 +83,8 @@ class _AddPageState extends State<AddPage> {
               Map<String, String> json = {
                 "info": info,
                 "amount": amount,
-                "note": note ?? ""
+                "note": note ?? "",
+                "type": isincome ? "income" : "expaens",
               };
               String date = Provider.of<Stater>(context, listen: false)
                   .selectDateString();

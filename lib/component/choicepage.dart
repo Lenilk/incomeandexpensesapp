@@ -21,7 +21,8 @@ class _ChoicePageState extends State<ChoicePage> {
             Navigator.of(context).pop();
             showDialog(
                 context: context,
-                builder: (_) => const AddPage(isincome: false));
+                builder: (_) => const AddPage(isincome: false),
+                barrierDismissible: false);
           },
         ),
         TextButton(
@@ -30,7 +31,8 @@ class _ChoicePageState extends State<ChoicePage> {
             Navigator.of(context).pop();
             showDialog(
                 context: context,
-                builder: (_) => const AddPage(isincome: true));
+                builder: (_) => const AddPage(isincome: true),
+                barrierDismissible: false);
           },
         ),
       ],
