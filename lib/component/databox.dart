@@ -10,7 +10,7 @@ class DataBox extends StatefulWidget {
 }
 
 class _DataBoxState extends State<DataBox> {
-  Widget TextData(String data) {
+  Widget textData(String data) {
     return Text(
       data,
       style: const TextStyle(color: Colors.white),
@@ -25,13 +25,13 @@ class _DataBoxState extends State<DataBox> {
     return Container(
       width: MediaQuery.of(context).size.width,
       color: isincome ? Colors.blueAccent : Colors.redAccent,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Center(
           child: Column(
         children: [
-          TextData("$infoString ${data["info"]}"),
-          TextData("จำนวน ${data["amount"]} บาท"),
-          if (data["note"] != "") TextData("หมายเหตุ ${data["note"]}"),
+          textData("$infoString ${data["info"]}"),
+          textData("จำนวน ${data["amount"]} บาท"),
+          if (data["note"] != "") textData("หมายเหตุ ${data["note"]}"),
         ],
       )),
     );
