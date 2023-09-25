@@ -1,17 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '.././function/function.dart';
 
-class AddPage extends StatefulWidget {
-  final bool isincome;
-  const AddPage({Key? key, required this.isincome}) : super(key: key);
+class UpdatePage extends StatefulWidget {
+  final Map<String, String> data;
+  final int index;
+  final String date;
+  const UpdatePage(
+      {Key? key, required this.data, required this.index, required this.date})
+      : super(key: key);
 
   @override
-  State<AddPage> createState() => _AddPageState();
+  State<UpdatePage> createState() => _UpdatePageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _UpdatePageState extends State<UpdatePage> {
   final infoEditer = TextEditingController();
   final amountEditer = TextEditingController();
   final noteEditer = TextEditingController();
@@ -26,9 +32,13 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isincome = widget.isincome;
+    Map<String, String> data = widget.data;
+    int index = widget.index;
+    infoEditer.text = data["info"]!;
+    amountEditer.text = data["amount"]!;
+    noteEditer.text = data["note"]!;
     return AlertDialog(
-      title: Center(child: Text(isincome ? "รายรับ" : "รายจ่าย")),
+      title: const Center(child: Text("แก้ไขข้อมูล")),
       scrollable: true,
       actionsAlignment: MainAxisAlignment.spaceBetween,
       content: SizedBox(
@@ -85,23 +95,19 @@ class _AddPageState extends State<AddPage> {
                 "info": info,
                 "amount": amount,
                 "note": note ?? "",
-                "type": isincome ? "income" : "expaens",
+                "type": data["type"]!,
               };
-              String date = Provider.of<Stater>(context, listen: false)
-                  .selectDateString();
-              if (!Provider.of<Stater>(context, listen: false)
-                  .data
-                  .where((element) => element["Date"] == date)
-                  .isNotEmpty) {
+
+              if (data.toString() != json.toString()) {
                 Provider.of<Stater>(context, listen: false)
-                    .addDateAndData(date, json);
+                    .updateDataInDate(widget.date, json, index);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Update Data')),
+                );
               } else {
-                Provider.of<Stater>(context, listen: false)
-                    .addDataInDate(date, json);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(content: Text("Not change")));
               }
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Processing Data')),
-              );
               Navigator.of(context).pop();
             }
 

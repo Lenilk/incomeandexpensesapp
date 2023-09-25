@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/component/component.dart';
+import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:provider/provider.dart';
 
 class DataBox extends StatefulWidget {
   final String type;
   final Map<String, String> data;
-  const DataBox({Key? key, required this.type, required this.data})
+  final int index;
+  const DataBox(
+      {Key? key, required this.type, required this.data, required this.index})
       : super(key: key);
   @override
   State<DataBox> createState() => _DataBoxState();
@@ -22,21 +27,56 @@ class _DataBoxState extends State<DataBox> {
     bool isincome = widget.type == "income";
     Map<String, String> data = widget.data;
     String infoString = isincome ? "รายรับ" : "รายจ่าย";
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: isincome ? Colors.blueAccent : Colors.redAccent,
-      padding: const EdgeInsets.all(10),
-      child: Center(
-          child: Column(
-        children: [
-          textData("$infoString ${data["info"]}"),
-          textData("จำนวน ${data["amount"]} บาท"),
-          if (data["note"] != "") textData("หมายเหตุ ${data["note"]}"),
-        ],
-      )),
+    String date =
+        Provider.of<Stater>(context, listen: false).selectDateString();
+    return GestureDetector(
+      onLongPress: () {
+        showDialog(
+          context: context,
+          builder: (_) => DeletePage(data: data, date: date),
+        );
+      },
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (_) => UpdatePage(
+            data: data,
+            date: date,
+            index: widget.index,
+          ),
+        );
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: isincome ? Colors.blueAccent : Colors.redAccent,
+        padding: const EdgeInsets.all(10),
+        child: Center(
+            child: Column(
+          children: [
+            textData("$infoString ${data["info"]}"),
+            textData("จำนวน ${data["amount"]} บาท"),
+            if (data["note"] != "") textData("หมายเหตุ ${data["note"]}"),
+          ],
+        )),
+      ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // class DataBox extends StatelessWidget {
 //   final String type;
 //   final Map<String, String> data;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:incomeandexpensesapp/component/addpage.dart';
+import 'package:incomeandexpensesapp/component/component.dart';
 
 class ChoicePage extends StatefulWidget {
   const ChoicePage({super.key});
