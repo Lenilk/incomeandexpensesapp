@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:incomeandexpensesapp/component/choicepage.dart';
-
 import 'package:provider/provider.dart';
 import './function/function.dart';
 import './function/extension.dart';
@@ -26,7 +24,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const MediaQuery(
+        data: MediaQueryData(textScaleFactor: 1.0),
+        child: MyHomePage(),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -52,9 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
     List datalist = isDayAvailable ? data[whereday]["data"] : [];
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title:
-            Center(child: Text(Provider.of<Stater>(context).selectDateTitle())),
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+          child: Text(
+            Provider.of<Stater>(context).selectDateTitle(),
+            style: const TextStyle(fontSize: 20),
+          ),
+        ),
       ),
       body: Column(children: [
         const Calender(),

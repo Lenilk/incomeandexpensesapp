@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import './extension.dart';
+import 'package:incomeandexpensesapp/function/extension.dart';
 
 class Stater with ChangeNotifier {
   List todo = [];
@@ -37,35 +37,8 @@ class Stater with ChangeNotifier {
       case "Sat":
         tday += "เสาร์";
     }
-    String month = DateFormat("MMM").format(selectDate);
-    String tmonth = "เดือน";
-    switch (month) {
-      case "Jan":
-        tmonth += "มกราคม";
-      case "Feb":
-        tmonth += "กุมภาพันธ์";
-      case "Mar":
-        tmonth += "มีนาคม";
-      case "Apr":
-        tmonth += "เมษายน";
-      case "May":
-        tmonth += "พฤษภาคม";
-      case "Jun":
-        tmonth += "มิถุนายน";
-      case "Jul":
-        tmonth += "กรกฎาคม";
-      case "Aug":
-        tmonth += "สิงหาคม";
-      case "Sep":
-        tmonth += "กันยายน";
-      case "Oct":
-        tmonth += "ตุลาคม";
-      case "Nov":
-        tmonth += "พฤศจิกายน";
-      case "Dec":
-        tmonth += "ธันวาคม";
-    }
-    return DateFormat("$tday วันที่ d $tmonth yyyy").format(selectDate);
+    String month = thmonth(selectDate);
+    return DateFormat("$tday วันที่ d $month").format(selectDate);
   }
 
   String selectDateString() {
