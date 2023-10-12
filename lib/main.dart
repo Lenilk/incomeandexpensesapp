@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import './function/function.dart';
 import './function/extension.dart';
 import 'component/component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(
@@ -43,6 +44,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String? data;
+  void getData() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("data", "Meaw");
+    setState(() {
+      data = pref.getString("data") ?? "data";
+    });
+    debugPrint(data);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> data = context.watch<Stater>().data;

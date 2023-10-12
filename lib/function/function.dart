@@ -55,6 +55,7 @@ class Stater with ChangeNotifier {
       "data": [dataAdd]
     });
     dateMark.add(DateFormat.yMd().parse(date));
+    setDatainSP(data);
     debugPrint(data.toString());
     notifyListeners();
   }
@@ -65,6 +66,7 @@ class Stater with ChangeNotifier {
     List<Map<String, String>> datalist = data[whereday]["data"];
     debugPrint(datalist.toString());
     datalist.add(dataAdd);
+    setDatainSP(data);
     notifyListeners();
   }
 
@@ -74,6 +76,7 @@ class Stater with ChangeNotifier {
     List<Map<String, String>> datalist = data[whereday]["data"];
     debugPrint(datalist.toString());
     datalist.remove(dataDelete);
+    setDatainSP(data);
     notifyListeners();
   }
 
@@ -84,6 +87,7 @@ class Stater with ChangeNotifier {
     List<Map<String, String>> datalist = data[whereday]["data"];
     debugPrint(datalist.toString());
     datalist[index] = dateUpdate;
+    setDatainSP(data);
     notifyListeners();
   }
 
