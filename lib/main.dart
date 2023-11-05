@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './function/function.dart';
@@ -44,20 +46,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String? data;
   void getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("data", "Meaw");
-    setState(() {
-      data = pref.getString("data") ?? "data";
-    });
-    debugPrint(data);
+    String? jsonString = pref.getString("Data1");
+    List<Map<String,dynamic>>data=(jsonString!=null)?json.decode(jsonString):[];
+    debugPrint(data.toString());
+    pref.setString("Data1", json.encode([{"meaw":1234}]));
+    String? testS = pref.getString("Data1");
+    debugPrint(testS.toString());
+    debugPrint(json.decode(testS!)[0]["meaw"].toString());
   }
 
   @override
   void initState() {
     super.initState();
     getData();
+
   }
 
   @override
