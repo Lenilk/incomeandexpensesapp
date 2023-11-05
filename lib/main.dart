@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? data;
   void getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("data", "Meaw");
+    pref.setString("data", "Meaw");
     setState(() {
       data = pref.getString("data") ?? "data";
     });
