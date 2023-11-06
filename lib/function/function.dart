@@ -1,9 +1,10 @@
 // import 'package:flutter/foundation.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:incomeandexpensesapp/function/extension.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class Stater with ChangeNotifier {
   List todo = [];
   DateTime selectDate = DateTime.now();
@@ -40,13 +41,24 @@ class Stater with ChangeNotifier {
     String month = thmonth(selectDate);
     return DateFormat("$tday วันที่ d $month").format(selectDate);
   }
-
+  void updateDataInSP()async{
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("Data2", json.encode(data));
+    debugPrint("updateSp");
+  }
   String selectDateString() {
     return formatToyMd(selectDate);
   }
 
   bool isSelectDayAvailable(BuildContext context) {
     return isSelectDayAvailablefn(formatToyMd(selectDate), context);
+  }
+
+  void initSetData(List<Map<String,dynamic>> dataS){
+    data=[...dataS];
+    debugPrint("Provider");
+    debugPrint(data.toString());
+    notifyListeners();
   }
 
   void addDateAndData(String date, Map<String, String> dataAdd) {
@@ -57,6 +69,7 @@ class Stater with ChangeNotifier {
     dateMark.add(DateFormat.yMd().parse(date));
     setDatainSP(data);
     debugPrint(data.toString());
+    updateDataInSP();
     notifyListeners();
   }
 
@@ -67,6 +80,7 @@ class Stater with ChangeNotifier {
     debugPrint(datalist.toString());
     datalist.add(dataAdd);
     setDatainSP(data);
+    updateDataInSP();
     notifyListeners();
   }
 
@@ -77,6 +91,7 @@ class Stater with ChangeNotifier {
     debugPrint(datalist.toString());
     datalist.remove(dataDelete);
     setDatainSP(data);
+    updateDataInSP();
     notifyListeners();
   }
 
@@ -88,6 +103,7 @@ class Stater with ChangeNotifier {
     debugPrint(datalist.toString());
     datalist[index] = dateUpdate;
     setDatainSP(data);
+    updateDataInSP();
     notifyListeners();
   }
 

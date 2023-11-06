@@ -46,26 +46,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void getData() async {
+  bool onStart =true;
+   List<Map<String,dynamic>> dataS =[];
+  void getData(BuildContext context) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    String? jsonString = pref.getString("Data1");
-    List<Map<String,dynamic>>data=(jsonString!=null)?json.decode(jsonString):[];
-    debugPrint(data.toString());
-    pref.setString("Data1", json.encode([{"meaw":1234}]));
-    String? testS = pref.getString("Data1");
-    debugPrint(testS.toString());
-    debugPrint(json.decode(testS!)[0]["meaw"].toString());
+    String? jsonString = pref.getString("Data2");
+    List<dynamic>dataL=(jsonString!=null)?json.decode(jsonString):[];
+    debugPrint(dataL.toString());
+    if(dataL!=[]){
+      List<Map<String,dynamic>> data=dataL.map((e) => {"Date":e["Date"],"data":e["data"]}
+      ).toList();
+      debugPrint(data.toString());
+      setState(() {
+        dataS=data;
+      });
+      Provider.of<Stater>(context,listen:false).initSetData(dataS);
+    }
+    // pref.setString("Data1", json.encode([{"meaw":1234}]));
+    // String? testS = pref.getString("Data1");
+    // debugPrint(testS.toString());
+    // debugPrint(json.decode(testS!)[0]["meaw"].toString());
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
-
+    getData(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    // if(onStart){
+    // Provider.of<Stater>(context,listen: false).initSetData(dataS);
+    // setState(() {
+    //   onStart=false;
+    // });
+    // }
     List<Map<String, dynamic>> data = context.watch<Stater>().data;
     String selectDateINData =
         Provider.of<Stater>(context, listen: true).selectDateString();
