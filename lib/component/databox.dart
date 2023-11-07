@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class DataBox extends StatefulWidget {
   final String type;
-  final Map<String, String> data;
+  final Map<String, dynamic> data;
   final int index;
   const DataBox(
       {Key? key, required this.type, required this.data, required this.index})
@@ -25,7 +25,7 @@ class _DataBoxState extends State<DataBox> {
   @override
   Widget build(BuildContext context) {
     bool isincome = widget.type == "income";
-    Map<String, String> data = widget.data;
+    Map<String, dynamic> data = widget.data;
     String infoString = isincome ? "รายรับ" : "รายจ่าย";
     String date =
         Provider.of<Stater>(context, listen: false).selectDateString();

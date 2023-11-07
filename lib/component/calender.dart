@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import "package:table_calendar/table_calendar.dart";
 import 'package:provider/provider.dart';
@@ -16,7 +17,8 @@ class _CalenderState extends State<Calender> {
   @override
   Widget build(BuildContext context) {
     DateTime focusDay = Provider.of<Stater>(context).selectDate;
-    List<DateTime> dateMark = context.watch<Stater>().dateMark;
+    List<String> dateMarkPr = context.watch<Stater>().dateMark;
+    List dateMark =dateMarkPr.map(((e) => DateTime.parse(e))).toList();
     return TableCalendar(
       firstDay: pastyear,
       lastDay: nextyear,

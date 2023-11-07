@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '.././function/function.dart';
 
 class UpdatePage extends StatefulWidget {
-  final Map<String, String> data;
+  final Map<String, dynamic> data;
   final int index;
   final String date;
   const UpdatePage(
@@ -30,7 +30,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, String> data = widget.data;
+    Map<String, dynamic> data = widget.data;
     int index = widget.index;
     infoEditer.text = data["info"]!;
     amountEditer.text = data["amount"]!;

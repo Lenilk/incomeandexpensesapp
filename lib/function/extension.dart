@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './function.dart';
 import 'package:provider/provider.dart';
-import "package:shared_preferences/shared_preferences.dart";
+
 
 String formatToyMd(DateTime date) {
   return DateFormat.yMd().format(date);
@@ -51,9 +51,4 @@ String thmonth(DateTime date) {
       tmonth += "ธันวาคม";
   }
   return tmonth;
-}
-
-void setDatainSP(List<Map<String, dynamic>> data) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('data', data.toString());
 }

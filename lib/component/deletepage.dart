@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:incomeandexpensesapp/function/function.dart';
 
 class DeletePage extends StatefulWidget {
-  final Map<String, String> data;
+  final Map<String, dynamic> data;
   final String date;
   const DeletePage({Key? key, required this.data, required this.date})
       : super(key: key);
