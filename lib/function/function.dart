@@ -43,7 +43,7 @@ class Stater with ChangeNotifier {
   }
   void updateDataInSP()async{
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("Data2", json.encode(data));
+    pref.setString("Data3", json.encode(data));
     debugPrint("updateSp");
   }
   String selectDateString() {

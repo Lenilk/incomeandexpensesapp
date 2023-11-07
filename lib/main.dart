@@ -48,19 +48,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool onStart =true;
    List<Map<String,dynamic>> dataS =[];
-  void getData(BuildContext context) async {
+  Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    String? jsonString = pref.getString("Data2");
+    String? jsonString = pref.getString("Data3");
     List<dynamic>dataL=(jsonString!=null)?json.decode(jsonString):[];
     debugPrint(dataL.toString());
     if(dataL!=[]){
+      //type '_Map<String, dynamic>' is not a subtype of type 'Map<String, String>
       List<Map<String,dynamic>> data=dataL.map((e) => {"Date":e["Date"],"data":e["data"]}
       ).toList();
       debugPrint(data.toString());
       setState(() {
         dataS=data;
       });
-      Provider.of<Stater>(context,listen:false).initSetData(dataS);
+      
     }
     // pref.setString("Data1", json.encode([{"meaw":1234}]));
     // String? testS = pref.getString("Data1");
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getData(context);
+    getData().then((_void)=>Provider.of<Stater>(context,listen:false).initSetData(dataS));
   }
 
   @override
