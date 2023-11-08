@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/jsonserialization/data.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 import './function/function.dart';
 import './function/extension.dart';
@@ -47,13 +49,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool onStart = true;
-  List<Map<String, dynamic>> dataS = [];
+  List<Data> dataS = [];
   List<String> dateMark = [];
   Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    String? jsonString = pref.getString("Data6");
-    String? jsonStringDM = pref.getString("Date6Dm");
-    List<dynamic> dataL = (jsonString != null) ? json.decode(jsonString) : [];
+    String? jsonString = pref.getString("Data11");
+    String? jsonStringDM = pref.getString("Date11Dm");
+    List<Data> dataL=(jsonString != null)?(json.decode(jsonString) as List<dynamic>).map((e)=>Data.fromJson(e)).toList()
+    :[];
     List<dynamic> dataLDM =
         (jsonStringDM != null) ? json.decode(jsonStringDM)["datemark"] : [];
     debugPrint(dataL.toString());
@@ -61,13 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
     if (dataL != []) {
       //type '_Map<String, dynamic>' is not a subtype of type 'Map<String, String>
       // ignore: unnecessary_cast
-      List<Map<String, dynamic>> data = dataL
-          .map((e) =>
-              {"Date": e["Date"], "data": e["data"]} as Map<String, dynamic>)
-          .toList();
-      debugPrint(data.toString());
+      debugPrint(dataL.toString());
       setState(() {
-        dataS = data;
+        dataS = dataL;
       });
     }
     if (dataLDM != []) {
@@ -100,12 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
     //   onStart=false;
     // });
     // }
-    List<Map<String, dynamic>> data = context.watch<Stater>().data;
+    List<Data> data = context.watch<Stater>().data;
     String selectDateINData =
         Provider.of<Stater>(context, listen: true).selectDateString();
     int whereday = whereDateInData(selectDateINData, context);
     bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
-    List datalist = isDayAvailable ? data[whereday]["data"] : [];
+    List<Note> datalist = isDayAvailable ? data[whereday].data : [];
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,

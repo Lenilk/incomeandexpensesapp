@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/component.dart';
 import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 
 class DataBox extends StatefulWidget {
   final String type;
-  final Map<String, dynamic> data;
+  final Note data;
   final int index;
   const DataBox(
       {Key? key, required this.type, required this.data, required this.index})
@@ -25,7 +26,7 @@ class _DataBoxState extends State<DataBox> {
   @override
   Widget build(BuildContext context) {
     bool isincome = widget.type == "income";
-    Map<String, dynamic> data = widget.data;
+    Note data = widget.data;
     String infoString = isincome ? "รายรับ" : "รายจ่าย";
     String date =
         Provider.of<Stater>(context, listen: false).selectDateString();
@@ -53,9 +54,9 @@ class _DataBoxState extends State<DataBox> {
         child: Center(
             child: Column(
           children: [
-            textData("$infoString ${data["info"]}"),
-            textData("จำนวน ${data["amount"]} บาท"),
-            if (data["note"] != "") textData("หมายเหตุ ${data["note"]}"),
+            textData("$infoString ${data.info}"),
+            textData("จำนวน ${data.amount} บาท"),
+            if (data.note != "") textData("หมายเหตุ ${data.note}"),
           ],
         )),
       ),

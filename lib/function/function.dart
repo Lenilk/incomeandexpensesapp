@@ -1,6 +1,8 @@
 // import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/jsonserialization/data.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:incomeandexpensesapp/function/extension.dart';
@@ -9,7 +11,7 @@ class Stater with ChangeNotifier {
   List todo = [];
   DateTime selectDate = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.month;
-  List<Map<String, dynamic>> data = [
+  List<Data> data = [
    //{info: ffhjj, amount: 665, note: , type: income}
   ];
   List<String> dateMark = [];
@@ -38,8 +40,9 @@ class Stater with ChangeNotifier {
   }
   void updateDataInSP()async{
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("Data6", json.encode(data));
-    pref.setString("Date6Dm", json.encode({"datemark":dateMark}));
+    pref.setString("Data11", json.encode(data.map((Data e) => e.toJson()).toList()));
+    // pref.setString("Data10", json.encode(data));
+    pref.setString("Date11Dm", json.encode({"datemark":dateMark}));
     debugPrint("updateSp");
     debugPrint(dateMark.toString());
   }
@@ -51,7 +54,7 @@ class Stater with ChangeNotifier {
     return isSelectDayAvailablefn(formatToyMd(selectDate), context);
   }
 
-  void initSetData(List<Map<String,dynamic>> dataS,List<String> datemark){
+  void initSetData(List<Data> dataS,List<String> datemark){
     data=[...dataS];
     dateMark=[...datemark];
     debugPrint("Provider");
@@ -60,11 +63,8 @@ class Stater with ChangeNotifier {
     notifyListeners();
   }
 
-  void addDateAndData(String date, Map<String, String> dataAdd) {
-    data.add({
-      "Date": date,
-      "data": [dataAdd]
-    });
+  void addDateAndData(String date, Note dataAdd) {
+    data.add(Data(date, [dataAdd]));
     String dateDm=(DateFormat.yMd().parse(date)).toString();
     if (!dateMark.contains(dateDm)){
          dateMark.add(dateDm);
@@ -76,34 +76,34 @@ class Stater with ChangeNotifier {
     notifyListeners();
   }
 
-  void addDataInDate(String date, Map<String, dynamic> dataAdd) {
-    whereday = data.indexWhere((json) => json["Date"] == date);
+  void addDataInDate(String date, Note dataAdd) {
+    whereday = data.indexWhere((json) => json.Date == date);
     debugPrint(whereday.toString());
-    List<dynamic> dataL=data[whereday]["data"];
+    // List<Note> dataL=data[whereday].data;
     // ignore: unnecessary_cast
-    List<Map<String,dynamic>> datalist = dataL.map((e) => {"info":e["info"],"amount":e["amount"],"note":e["note"],"type":e["type"]} as Map<String,dynamic>).toList();
-    debugPrint(datalist.toString());
-    datalist.add(dataAdd);
-    data[whereday]["data"]=datalist;
+    // List<Note> datalist = dataL.map((Note e) => Note(e.info,e.amount,e.note,e.type)).toList();
+    
+    data[whereday].data.add(dataAdd);
+    debugPrint(data.toString());
     notifyListeners();
     updateDataInSP();
   }
 
-  void deleteDataInDate(String date, Map<String, dynamic> dataDelete) {
-    whereday = data.indexWhere((json) => json["Date"] == date);
+  void deleteDataInDate(String date, Note dataDelete) {
+    whereday = data.indexWhere((json) => json.Date == date);
     debugPrint(whereday.toString());
-    List<dynamic> dataL=data[whereday]["data"];
+    // List<Note> dataL=data[whereday].data;
     // ignore: unnecessary_cast
-    List<String> datalist = dataL.map((e) => json.encode({"info":e["info"],"amount":e["amount"],"note":e["note"],"type":e["type"]})).toList();
+    // List<String> datalist = dataL.map((e) => json.encode(Note(e.info,e.amount,e.note,e.type))).toList();
     debugPrint(dataDelete.toString());
-    datalist.remove(json.encode((dataDelete)));
-    List<Map<String,dynamic>> datasave = datalist.map((e) => json.decode(e) as Map<String,dynamic>).toList();
-    debugPrint(datalist.toString());
-    debugPrint(datasave.toString());
+    data[whereday].data.remove(dataDelete);
+    // List<Note> datasave = datalist.map((e) => Note.fromJson(json.decode(e))).toList();
+    // debugPrint(datalist.toString());
+    // debugPrint(datasave.toString());
     debugPrint("delete");
-    data[whereday]["data"]=datasave;
+    // data[whereday].data=datasave;
     debugPrint(data[whereday].toString());
-    if (data[whereday]["data"].toString()==[].toString()){
+    if (data[whereday].data.toString()==[].toString()){
       debugPrint("Delte");
       data.removeAt(whereday);
       dateMark.removeAt(whereday);
@@ -113,15 +113,15 @@ class Stater with ChangeNotifier {
   }
 
   void updateDataInDate(
-      String date, Map<String, String> dateUpdate, int index) {
-    whereday = data.indexWhere((json) => json["Date"] == date);
+      String date, Note dataUpdate, int index) {
+    whereday = data.indexWhere((json) => json.Date == date);
     debugPrint(whereday.toString());
-    List<dynamic> dataL=data[whereday]["data"];
+    // List<Note> dataL=data[whereday].data;
     // ignore: unnecessary_cast
-    List<Map<String,dynamic>> datalist = dataL.map((e) => {"info":e["info"],"amount":e["amount"],"note":e["note"],"type":e["type"]} as Map<String,dynamic>).toList();
-    debugPrint(datalist.toString());
-    datalist[index] = dateUpdate;
-    data[whereday]["data"]=datalist;
+    // List<Note> datalist = dataL.map((e) => {"info":e["info"],"amount":e["amount"],"note":e["note"],"type":e["type"]} as Map<String,dynamic>).toList();
+    // debugPrint(dataL.toString());
+    data[whereday].data[index]=dataUpdate;
+    debugPrint(data[whereday].data.toString());
     updateDataInSP();
     notifyListeners();
   }

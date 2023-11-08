@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import './databox.dart';
 
 class Datalist extends StatelessWidget {
-  final List data;
+  final List<Note> data;
   const Datalist({Key? key, required this.data}) : super(key: key);
 
   @override
@@ -16,7 +17,7 @@ class Datalist extends StatelessWidget {
                     itemCount: data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return DataBox(
-                          type: data[index]["type"],
+                          type: data[index].type,
                           data: data[index],
                           index: index);
                     }),

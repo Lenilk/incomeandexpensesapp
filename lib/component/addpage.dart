@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 import '.././function/function.dart';
 
@@ -79,19 +80,18 @@ class _AddPageState extends State<AddPage> {
             if (_form.currentState!.validate()) {
               String info = infoEditer.value.text;
               String amount = amountEditer.value.text;
-              String? note =
-                  noteEditer.value.text.isEmpty ? null : noteEditer.value.text;
-              Map<String, String> json = {
-                "info": info,
-                "amount": amount,
-                "note": note ?? "",
-                "type": isincome ? "income" : "expaens",
-              };
+              String note =noteEditer.value.text??"";
+              Note json = Note(info, int.parse(amount), note, isincome ? "income" : "expaens");
+              //   "info": info,
+              //   "amount": amount,
+              //   "note": note ?? "",
+              //   "type": isincome ? "income" : "expaens",
+              // };
               String date = Provider.of<Stater>(context, listen: false)
                   .selectDateString();
               if (!Provider.of<Stater>(context, listen: false)
                   .data
-                  .where((element) => element["Date"] == date)
+                  .where((element) => element.Date == date)
                   .isNotEmpty) {
                 Provider.of<Stater>(context, listen: false)
                     .addDateAndData(date, json);

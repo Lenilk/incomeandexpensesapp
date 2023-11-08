@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 import 'package:incomeandexpensesapp/function/function.dart';
 
 class DeletePage extends StatefulWidget {
-  final Map<String, dynamic> data;
+  final Note data;
   final String date;
   const DeletePage({Key? key, required this.data, required this.date})
       : super(key: key);
@@ -20,7 +21,7 @@ class _DeletePageState extends State<DeletePage> {
       actionsAlignment: MainAxisAlignment.spaceBetween,
       scrollable: true,
       content: Center(
-        child: Text("ชื่อรายการ คือ ${widget.data["info"]}"),
+        child: Text("ชื่อรายการ คือ ${widget.data.info}"),
       ),
       actions: [
         TextButton(

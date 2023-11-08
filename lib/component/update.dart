@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 import '.././function/function.dart';
 
 class UpdatePage extends StatefulWidget {
-  final Map<String, dynamic> data;
+  final Note data;
   final int index;
   final String date;
   const UpdatePage(
@@ -30,11 +31,11 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> data = widget.data;
+    Note data = widget.data;
     int index = widget.index;
-    infoEditer.text = data["info"]!;
-    amountEditer.text = data["amount"]!;
-    noteEditer.text = data["note"]!;
+    infoEditer.text = data.info;
+    amountEditer.text = data.amount.toString();
+    noteEditer.text = data.note;
     return AlertDialog(
       title: const Center(child: Text("แก้ไขข้อมูล")),
       scrollable: true,
@@ -86,17 +87,13 @@ class _UpdatePageState extends State<UpdatePage> {
           onPressed: () {
             if (_form.currentState!.validate()) {
               String info = infoEditer.value.text;
-              String amount = amountEditer.value.text;
-              String? note =
-                  noteEditer.value.text.isEmpty ? null : noteEditer.value.text;
-              Map<String, String> json = {
-                "info": info,
-                "amount": amount,
-                "note": note ?? "",
-                "type": data["type"]!,
-              };
-
-              if (data.toString() != json.toString()) {
+              int amount = int.parse(amountEditer.value.text);
+              String note = noteEditer.value.text??"";
+              Note json = Note(info, amount, note, data.type);
+              debugPrint("Update Page");
+              debugPrint(json.toString());
+              debugPrint(data.toString());
+              if (data.toJson().toString() != json.toJson().toString()) {
                 Provider.of<Stater>(context, listen: false)
                     .updateDataInDate(widget.date, json, index);
                 ScaffoldMessenger.of(context).showSnackBar(

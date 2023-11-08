@@ -11,14 +11,14 @@ String formatToyMd(DateTime date) {
 bool isSelectDayAvailablefn(String date, BuildContext context) {
   return Provider.of<Stater>(context, listen: false)
       .data
-      .where((element) => element["Date"] == date)
+      .where((element) => element.Date == date)
       .isNotEmpty;
 }
 
 int whereDateInData(String date, BuildContext context) {
   return Provider.of<Stater>(context, listen: false)
       .data
-      .indexWhere((json) => json["Date"] == date);
+      .indexWhere((json) => json.Date == date);
 }
 
 String thmonth(DateTime date) {
