@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import './databox.dart';
 
 class Datalist extends StatelessWidget {
-  final bool isAvailable;
   final List data;
-  const Datalist({Key? key, required this.isAvailable, required this.data})
-      : super(key: key);
+  const Datalist({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
         child: Padding(
-      padding: const EdgeInsets.only(top: 0),
-      child: isAvailable
-          ? Column(children: [
+            padding: const EdgeInsets.only(top: 0),
+            child: Column(children: [
               Expanded(
                 child: ListView.builder(
                     itemCount: data.length,
@@ -24,10 +21,6 @@ class Datalist extends StatelessWidget {
                           index: index);
                     }),
               ),
-            ])
-          : const Center(
-              child: Text("No data"),
-            ),
-    ));
+            ])));
   }
 }

@@ -46,38 +46,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool onStart =true;
-   List<Map<String,dynamic>> dataS =[];
-   List<String> dateMark = [];
+  bool onStart = true;
+  List<Map<String, dynamic>> dataS = [];
+  List<String> dateMark = [];
   Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String? jsonString = pref.getString("Data6");
     String? jsonStringDM = pref.getString("Date6Dm");
-    List<dynamic>dataL=(jsonString!=null)?json.decode(jsonString):[];
-    List<dynamic>dataLDM=(jsonStringDM!=null)?json.decode(jsonStringDM)["datemark"]:[];
+    List<dynamic> dataL = (jsonString != null) ? json.decode(jsonString) : [];
+    List<dynamic> dataLDM =
+        (jsonStringDM != null) ? json.decode(jsonStringDM)["datemark"] : [];
     debugPrint(dataL.toString());
     debugPrint(dataLDM.toString());
-    if(dataL!=[]){
+    if (dataL != []) {
       //type '_Map<String, dynamic>' is not a subtype of type 'Map<String, String>
       // ignore: unnecessary_cast
-      List<Map<String,dynamic>> data=dataL.map((e) => {"Date":e["Date"],"data":e["data"]} as Map<String,dynamic>
-      ).toList();
+      List<Map<String, dynamic>> data = dataL
+          .map((e) =>
+              {"Date": e["Date"], "data": e["data"]} as Map<String, dynamic>)
+          .toList();
       debugPrint(data.toString());
       setState(() {
-        dataS=data;
+        dataS = data;
       });
-      
     }
-    if(dataLDM!=[]){
+    if (dataLDM != []) {
       //type '_Map<String, dynamic>' is not a subtype of type 'Map<String, String>
       // ignore: unnecessary_cast
-      List<String> data=dataLDM.map((e) => e as String
-      ).toList();
+      List<String> data = dataLDM.map((e) => e as String).toList();
       debugPrint(data.toString());
       setState(() {
-        dateMark=data;
+        dateMark = data;
       });
-      
     }
     // pref.setString("Data1", json.encode([{"meaw":1234}]));
     // String? testS = pref.getString("Data1");
@@ -88,7 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getData().then((e)=>Provider.of<Stater>(context,listen:false).initSetData(dataS,dateMark));
+    getData().then((e) => Provider.of<Stater>(context, listen: false)
+        .initSetData(dataS, dateMark));
   }
 
   @override
@@ -120,10 +121,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(children: [
         const Calender(),
-        Datalist(
-          data: datalist,
-          isAvailable: isDayAvailable,
-        )
+        if (isDayAvailable)
+          Datalist(
+            data: datalist,
+          )
+        else
+          const Expanded(
+            child:  Center(
+              child: Text("No data"),
+            ),
+          ),
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
