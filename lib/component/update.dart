@@ -72,6 +72,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   decoration: const InputDecoration(hintText: "หมายเหตุ"),
                   maxLines: 3,
                 ),
+                // TODO Add redio for can change type of note
               ],
             )),
       ),
