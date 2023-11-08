@@ -80,7 +80,7 @@ class _AddPageState extends State<AddPage> {
             if (_form.currentState!.validate()) {
               String info = infoEditer.value.text;
               String amount = amountEditer.value.text;
-              String note =noteEditer.value.text??"";
+              String note =noteEditer.value.text;
               Note json = Note(info, int.parse(amount), note, isincome ? "income" : "expaens");
               //   "info": info,
               //   "amount": amount,

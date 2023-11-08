@@ -88,7 +88,7 @@ class _UpdatePageState extends State<UpdatePage> {
             if (_form.currentState!.validate()) {
               String info = infoEditer.value.text;
               int amount = int.parse(amountEditer.value.text);
-              String note = noteEditer.value.text??"";
+              String note = noteEditer.value.text;
               Note json = Note(info, amount, note, data.type);
               debugPrint("Update Page");
               debugPrint(json.toString());
