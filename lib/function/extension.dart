@@ -22,33 +22,33 @@ int whereDateInData(String date, BuildContext context) {
 }
 
 String thmonth(DateTime date) {
-  String month = DateFormat("MMM").format(date);
-  String tmonth = "เดือน";
+  String month = DateFormat('MMM').format(date);
+  String tmonth = 'เดือน';
   switch (month) {
-    case "Jan":
-      tmonth += "มกราคม";
-    case "Feb":
-      tmonth += "กุมภาพันธ์";
-    case "Mar":
-      tmonth += "มีนาคม";
-    case "Apr":
-      tmonth += "เมษายน";
-    case "May":
-      tmonth += "พฤษภาคม";
-    case "Jun":
-      tmonth += "มิถุนายน";
-    case "Jul":
-      tmonth += "กรกฎาคม";
-    case "Aug":
-      tmonth += "สิงหาคม";
-    case "Sep":
-      tmonth += "กันยายน";
-    case "Oct":
-      tmonth += "ตุลาคม";
-    case "Nov":
-      tmonth += "พฤศจิกายน";
-    case "Dec":
-      tmonth += "ธันวาคม";
+    case 'Jan':
+      tmonth += 'มกราคม';
+    case 'Feb':
+      tmonth += 'กุมภาพันธ์';
+    case 'Mar':
+      tmonth += 'มีนาคม';
+    case 'Apr':
+      tmonth += 'เมษายน';
+    case 'May':
+      tmonth += 'พฤษภาคม';
+    case 'Jun':
+      tmonth += 'มิถุนายน';
+    case 'Jul':
+      tmonth += 'กรกฎาคม';
+    case 'Aug':
+      tmonth += 'สิงหาคม';
+    case 'Sep':
+      tmonth += 'กันยายน';
+    case 'Oct':
+      tmonth += 'ตุลาคม';
+    case 'Nov':
+      tmonth += 'พฤศจิกายน';
+    case 'Dec':
+      tmonth += 'ธันวาคม';
   }
   return tmonth;
 }

@@ -7,57 +7,93 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:incomeandexpensesapp/function/extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class Stater with ChangeNotifier {
   List todo = [];
   DateTime selectDate = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.month;
   List<Data> data = [
-   //{info: ffhjj, amount: 665, note: , type: income}
+    //{info: ffhjj, amount: 665, note: , type: income}
   ];
   List<String> dateMark = [];
   int whereday = 0;
   String selectDateTitle() {
-    String day = DateFormat("EEE").format(selectDate);
-    String tday = "วัน";
+    String day = DateFormat('EEE').format(selectDate);
+    String tday = 'วัน';
     switch (day) {
-      case "Sun":
-        tday += "อาทิตย์";
-      case "Mon":
-        tday += "จันทร์";
-      case "Tue":
-        tday += "อังคาร";
-      case "Wed":
-        tday += "พุธ";
-      case "Thu":
-        tday += "พฤหัสบดี";
-      case "Fri":
-        tday += "ศุกร์";
-      case "Sat":
-        tday += "เสาร์";
+      case 'Sun':
+        tday += 'อาทิตย์';
+      case 'Mon':
+        tday += 'จันทร์';
+      case 'Tue':
+        tday += 'อังคาร';
+      case 'Wed':
+        tday += 'พุธ';
+      case 'Thu':
+        tday += 'พฤหัสบดี';
+      case 'Fri':
+        tday += 'ศุกร์';
+      case 'Sat':
+        tday += 'เสาร์';
     }
     String month = thmonth(selectDate);
-    return DateFormat("$tday วันที่ d $month").format(selectDate);
+    return DateFormat('$tday วันที่ d $month').format(selectDate);
   }
-  void updateDataInSP()async{
+
+  void updateDataInSP() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("Data11", json.encode(data.map((Data e) => e.toJson()).toList()));
+    pref.setString(
+        'Data11', json.encode(data.map((Data e) => e.toJson()).toList()));
     // pref.setString("Data10", json.encode(data));
-    pref.setString("Date11Dm", json.encode({"datemark":dateMark}));
-    debugPrint("updateSp");
+    pref.setString('Date11Dm', json.encode({'datemark': dateMark}));
+    debugPrint('updateSp');
     debugPrint(dateMark.toString());
   }
+
   String selectDateString() {
     return formatToyMd(selectDate);
+  }
+
+  int incomeAmount() {
+    int incomeamt = 0;
+    String date = selectDateString();
+    whereday = data.indexWhere((json) => json.Date == date);
+    if (whereday != -1) {
+      List<Note> datalist = data[whereday].data;
+      for (var i = 0; i < datalist.length; i++) {
+        Note note = datalist[i];
+        if (note.type == 'income') {
+          incomeamt += note.amount;
+        }
+      }
+    }
+    return incomeamt;
+  }
+
+  int expensAmount() {
+    int expens = 0;
+    String date = selectDateString();
+    whereday = data.indexWhere((json) => json.Date == date);
+    if (whereday != -1) {
+      List<Note> datalist = data[whereday].data;
+      for (var i = 0; i < datalist.length; i++) {
+        Note note = datalist[i];
+        if (note.type == 'expens') {
+          expens += note.amount;
+        }
+      }
+    }
+    return expens;
   }
 
   bool isSelectDayAvailable(BuildContext context) {
     return isSelectDayAvailablefn(formatToyMd(selectDate), context);
   }
 
-  void initSetData(List<Data> dataS,List<String> datemark){
-    data=[...dataS];
-    dateMark=[...datemark];
-    debugPrint("Provider");
+  void initSetData(List<Data> dataS, List<String> datemark) {
+    data = [...dataS];
+    dateMark = [...datemark];
+    debugPrint('Provider');
     debugPrint(data.toString());
     debugPrint(dateMark.toString());
     notifyListeners();
@@ -65,11 +101,11 @@ class Stater with ChangeNotifier {
 
   void addDateAndData(String date, Note dataAdd) {
     data.add(Data(date, [dataAdd]));
-    String dateDm=(DateFormat.yMd().parse(date)).toString();
-    if (!dateMark.contains(dateDm)){
-         dateMark.add(dateDm);
+    String dateDm = (DateFormat.yMd().parse(date)).toString();
+    if (!dateMark.contains(dateDm)) {
+      dateMark.add(dateDm);
     }
- 
+
     debugPrint(data.toString());
     debugPrint(dateMark.toString());
     updateDataInSP();
@@ -82,7 +118,7 @@ class Stater with ChangeNotifier {
     // List<Note> dataL=data[whereday].data;
     // ignore: unnecessary_cast
     // List<Note> datalist = dataL.map((Note e) => Note(e.info,e.amount,e.note,e.type)).toList();
-    
+
     data[whereday].data.add(dataAdd);
     debugPrint(data.toString());
     notifyListeners();
@@ -100,11 +136,11 @@ class Stater with ChangeNotifier {
     // List<Note> datasave = datalist.map((e) => Note.fromJson(json.decode(e))).toList();
     // debugPrint(datalist.toString());
     // debugPrint(datasave.toString());
-    debugPrint("delete");
+    debugPrint('delete');
     // data[whereday].data=datasave;
     debugPrint(data[whereday].toString());
-    if (data[whereday].data.toString()==[].toString()){
-      debugPrint("Delte");
+    if (data[whereday].data.toString() == [].toString()) {
+      debugPrint('Delte');
       data.removeAt(whereday);
       dateMark.removeAt(whereday);
     }
@@ -112,15 +148,14 @@ class Stater with ChangeNotifier {
     updateDataInSP();
   }
 
-  void updateDataInDate(
-      String date, Note dataUpdate, int index) {
+  void updateDataInDate(String date, Note dataUpdate, int index) {
     whereday = data.indexWhere((json) => json.Date == date);
     debugPrint(whereday.toString());
     // List<Note> dataL=data[whereday].data;
     // ignore: unnecessary_cast
     // List<Note> datalist = dataL.map((e) => {"info":e["info"],"amount":e["amount"],"note":e["note"],"type":e["type"]} as Map<String,dynamic>).toList();
     // debugPrint(dataL.toString());
-    data[whereday].data[index]=dataUpdate;
+    data[whereday].data[index] = dataUpdate;
     debugPrint(data[whereday].data.toString());
     updateDataInSP();
     notifyListeners();
