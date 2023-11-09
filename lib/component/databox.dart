@@ -49,7 +49,9 @@ class _DataBoxState extends State<DataBox> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        color: isincome ? Colors.blueAccent : Colors.redAccent,
+        color: isincome
+            ? const Color.fromARGB(255, 123, 158, 218)
+            : const Color.fromARGB(255, 243, 130, 130),
         padding: const EdgeInsets.all(10),
         child: Center(
             child: Column(

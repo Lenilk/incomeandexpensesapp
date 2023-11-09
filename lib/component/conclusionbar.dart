@@ -6,28 +6,33 @@ class ConclusionBar extends StatelessWidget {
   const ConclusionBar(
       {Key? key, required this.incomeamt, required this.expensamt})
       : super(key: key);
+  Widget textData(String data) {
+    return Text(
+      data,
+      style: const TextStyle(color: Colors.white),
+      overflow: TextOverflow.ellipsis,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Expanded(
         child: Container(
-            color: const Color.fromARGB(255, 243, 130, 130),
+            color: Colors.redAccent,
             padding: const EdgeInsets.all(10),
             child: Center(
-                child: Text(
+                child: textData(
               'รายจ่าย $expensamt บาท',
-              overflow: TextOverflow.ellipsis,
             ))),
       ),
       Expanded(
         child: Container(
-            color: const Color.fromARGB(255, 123, 158, 218),
+            color: Colors.blueAccent,
             padding: const EdgeInsets.all(10),
             child: Center(
-                child: Text(
+                child: textData(
               'รายรับ $incomeamt บาท',
-              overflow: TextOverflow.ellipsis,
             ))),
       )
     ]);
