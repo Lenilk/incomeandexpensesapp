@@ -17,33 +17,33 @@ class Stater with ChangeNotifier {
   List<String> dateMark = [];
   int whereday = 0;
   String selectDateTitle() {
-    String day = DateFormat("EEE").format(selectDate);
-    String tday = "วัน";
+    String day = DateFormat('EEE').format(selectDate);
+    String tday = 'วัน';
     switch (day) {
-      case "Sun":
-        tday += "อาทิตย์";
-      case "Mon":
-        tday += "จันทร์";
-      case "Tue":
-        tday += "อังคาร";
-      case "Wed":
-        tday += "พุธ";
-      case "Thu":
-        tday += "พฤหัสบดี";
-      case "Fri":
-        tday += "ศุกร์";
-      case "Sat":
-        tday += "เสาร์";
+      case 'Sun':
+        tday += 'อาทิตย์';
+      case 'Mon':
+        tday += 'จันทร์';
+      case 'Tue':
+        tday += 'อังคาร';
+      case 'Wed':
+        tday += 'พุธ';
+      case 'Thu':
+        tday += 'พฤหัสบดี';
+      case 'Fri':
+        tday += 'ศุกร์';
+      case 'Sat':
+        tday += 'เสาร์';
     }
     String month = thmonth(selectDate);
-    return DateFormat("$tday วันที่ d $month").format(selectDate);
+    return DateFormat('$tday วันที่ d $month').format(selectDate);
   }
   void updateDataInSP()async{
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("Data11", json.encode(data.map((Data e) => e.toJson()).toList()));
+    pref.setString('Data11', json.encode(data.map((Data e) => e.toJson()).toList()));
     // pref.setString("Data10", json.encode(data));
-    pref.setString("Date11Dm", json.encode({"datemark":dateMark}));
-    debugPrint("updateSp");
+    pref.setString('Date11Dm', json.encode({'datemark':dateMark}));
+    debugPrint('updateSp');
     debugPrint(dateMark.toString());
   }
   String selectDateString() {
@@ -57,7 +57,7 @@ class Stater with ChangeNotifier {
   void initSetData(List<Data> dataS,List<String> datemark){
     data=[...dataS];
     dateMark=[...datemark];
-    debugPrint("Provider");
+    debugPrint('Provider');
     debugPrint(data.toString());
     debugPrint(dateMark.toString());
     notifyListeners();
@@ -100,11 +100,11 @@ class Stater with ChangeNotifier {
     // List<Note> datasave = datalist.map((e) => Note.fromJson(json.decode(e))).toList();
     // debugPrint(datalist.toString());
     // debugPrint(datasave.toString());
-    debugPrint("delete");
+    debugPrint('delete');
     // data[whereday].data=datasave;
     debugPrint(data[whereday].toString());
     if (data[whereday].data.toString()==[].toString()){
-      debugPrint("Delte");
+      debugPrint('Delte');
       data.removeAt(whereday);
       dateMark.removeAt(whereday);
     }

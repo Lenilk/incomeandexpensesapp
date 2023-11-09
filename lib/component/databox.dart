@@ -25,9 +25,9 @@ class _DataBoxState extends State<DataBox> {
 
   @override
   Widget build(BuildContext context) {
-    bool isincome = widget.type == "income";
+    bool isincome = widget.type == 'income';
     Note data = widget.data;
-    String infoString = isincome ? "รายรับ" : "รายจ่าย";
+    String infoString = isincome ? 'รายรับ' : 'รายจ่าย';
     String date =
         Provider.of<Stater>(context, listen: false).selectDateString();
     return GestureDetector(
@@ -54,9 +54,9 @@ class _DataBoxState extends State<DataBox> {
         child: Center(
             child: Column(
           children: [
-            textData("$infoString ${data.info}"),
-            textData("จำนวน ${data.amount} บาท"),
-            if (data.note != "") textData("หมายเหตุ ${data.note}"),
+            textData('$infoString ${data.info}'),
+            textData('จำนวน ${data.amount} บาท'),
+            if (data.note != '') textData('หมายเหตุ ${data.note}'),
           ],
         )),
       ),

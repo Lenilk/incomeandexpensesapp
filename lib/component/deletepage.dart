@@ -17,11 +17,11 @@ class _DeletePageState extends State<DeletePage> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Center(child: Text("จะลบจริงๆหรอ")),
+      title: const Center(child: Text('จะลบจริงๆหรอ')),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       scrollable: true,
       content: Center(
-        child: Text("ชื่อรายการ คือ ${widget.data.info}"),
+        child: Text('ชื่อรายการ คือ ${widget.data.info}'),
       ),
       actions: [
         TextButton(

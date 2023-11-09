@@ -53,12 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> dateMark = [];
   Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    String? jsonString = pref.getString("Data11");
-    String? jsonStringDM = pref.getString("Date11Dm");
+    String? jsonString = pref.getString('Data11');
+    String? jsonStringDM = pref.getString('Date11Dm');
     List<Data> dataL=(jsonString != null)?(json.decode(jsonString) as List<dynamic>).map((e)=>Data.fromJson(e)).toList()
     :[];
     List<dynamic> dataLDM =
-        (jsonStringDM != null) ? json.decode(jsonStringDM)["datemark"] : [];
+        (jsonStringDM != null) ? json.decode(jsonStringDM)['datemark'] : [];
     debugPrint(dataL.toString());
     debugPrint(dataLDM.toString());
     if (dataL != []) {
@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         else
           const Expanded(
             child:  Center(
-              child: Text("No data"),
+              child: Text('No data'),
             ),
           ),
       ]),

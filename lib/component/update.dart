@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:incomeandexpensesapp/component/updatetype.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 import '.././function/function.dart';
@@ -37,44 +38,50 @@ class _UpdatePageState extends State<UpdatePage> {
     amountEditer.text = data.amount.toString();
     noteEditer.text = data.note;
     return AlertDialog(
-      title: const Center(child: Text("แก้ไขข้อมูล")),
+      title: const Center(child: Text('แก้ไขข้อมูล')),
       scrollable: true,
       actionsAlignment: MainAxisAlignment.spaceBetween,
       content: SizedBox(
-        child: Form(
-            key: _form,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: infoEditer,
-                  decoration: const InputDecoration(hintText: "อะไร"),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: amountEditer,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(hintText: "กี่บาท"),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: noteEditer,
-                  decoration: const InputDecoration(hintText: "หมายเหตุ"),
-                  maxLines: 3,
-                ),
-                // TODO Add redio for can change type of note
-              ],
-            )),
+        child: Column(
+          children: [
+            Form(
+                key: _form,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      controller: infoEditer,
+                      decoration: const InputDecoration(hintText: 'อะไร'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      autofocus: true,
+                      controller: amountEditer,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: const InputDecoration(hintText: 'กี่บาท'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: noteEditer,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(hintText: 'หมายเหตุ'),
+                      maxLines: 3,
+                    ),
+                  ],
+                )),
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -87,24 +94,25 @@ class _UpdatePageState extends State<UpdatePage> {
           child: const Text('OK'),
           onPressed: () {
             if (_form.currentState!.validate()) {
+              FocusScope.of(context).unfocus();
               String info = infoEditer.value.text;
               int amount = int.parse(amountEditer.value.text);
               String note = noteEditer.value.text;
-              Note json = Note(info, amount, note, data.type);
-              debugPrint("Update Page");
+              String type = data.type;
+              Note json = Note(info, amount, note, type);
+              debugPrint('Update Page');
               debugPrint(json.toString());
               debugPrint(data.toString());
-              if (data.toJson().toString() != json.toJson().toString()) {
-                Provider.of<Stater>(context, listen: false)
-                    .updateDataInDate(widget.date, json, index);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Update Data')),
-                );
-              } else {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text("Not change")));
-              }
               Navigator.of(context).pop();
+              showDialog(
+                  context: context,
+                  builder: (_) => UpdateTypePage(
+                        data: data,
+                        json: json,
+                        index: index,
+                        date: widget.date,
+                      ),
+                  barrierDismissible: false);
             }
 
             debugPrint(

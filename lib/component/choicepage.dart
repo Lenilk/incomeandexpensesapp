@@ -12,7 +12,7 @@ class _ChoicePageState extends State<ChoicePage> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("เพิ่มข้อมูล"),
+      title: const Text('เพิ่มข้อมูล'),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         TextButton(

@@ -29,7 +29,7 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     bool isincome = widget.isincome;
     return AlertDialog(
-      title: Center(child: Text(isincome ? "รายรับ" : "รายจ่าย")),
+      title: Center(child: Text(isincome ? 'รายรับ' : 'รายจ่าย')),
       scrollable: true,
       actionsAlignment: MainAxisAlignment.spaceBetween,
       content: SizedBox(
@@ -39,7 +39,7 @@ class _AddPageState extends State<AddPage> {
               children: [
                 TextFormField(
                   controller: infoEditer,
-                  decoration: const InputDecoration(hintText: "อะไร"),
+                  decoration: const InputDecoration(hintText: 'อะไร'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
@@ -51,7 +51,7 @@ class _AddPageState extends State<AddPage> {
                   controller: amountEditer,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(hintText: "กี่บาท"),
+                  decoration: const InputDecoration(hintText: 'กี่บาท'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
@@ -61,7 +61,7 @@ class _AddPageState extends State<AddPage> {
                 ),
                 TextFormField(
                   controller: noteEditer,
-                  decoration: const InputDecoration(hintText: "หมายเหตุ"),
+                  decoration: const InputDecoration(hintText: 'หมายเหตุ'),
                   maxLines: 3,
                 ),
               ],
@@ -81,7 +81,7 @@ class _AddPageState extends State<AddPage> {
               String info = infoEditer.value.text;
               String amount = amountEditer.value.text;
               String note =noteEditer.value.text;
-              Note json = Note(info, int.parse(amount), note, isincome ? "income" : "expens");
+              Note json = Note(info, int.parse(amount), note, isincome ? 'income' : 'expens');
               //   "info": info,
               //   "amount": amount,
               //   "note": note ?? "",
