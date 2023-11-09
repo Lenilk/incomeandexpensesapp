@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/component/conclusionbar.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
@@ -55,8 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String? jsonString = pref.getString('Data11');
     String? jsonStringDM = pref.getString('Date11Dm');
-    List<Data> dataL=(jsonString != null)?(json.decode(jsonString) as List<dynamic>).map((e)=>Data.fromJson(e)).toList()
-    :[];
+    List<Data> dataL = (jsonString != null)
+        ? (json.decode(jsonString) as List<dynamic>)
+            .map((e) => Data.fromJson(e))
+            .toList()
+        : [];
     List<dynamic> dataLDM =
         (jsonStringDM != null) ? json.decode(jsonStringDM)['datemark'] : [];
     debugPrint(dataL.toString());
@@ -105,6 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
     int whereday = whereDateInData(selectDateINData, context);
     bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
     List<Note> datalist = isDayAvailable ? data[whereday].data : [];
+    int incomeamt = context.watch<Stater>().incomeAmount();
+    int expensamt = context.watch<Stater>().expensAmount();
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
@@ -121,13 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(children: [
         const Calender(),
         if (isDayAvailable)
-        // TODO Add Conclusion of income and expens
+          ConclusionBar(incomeamt: incomeamt, expensamt: expensamt),
+        if (isDayAvailable)
           Datalist(
             data: datalist,
           )
         else
           const Expanded(
-            child:  Center(
+            child: Center(
               child: Text('No data'),
             ),
           ),
