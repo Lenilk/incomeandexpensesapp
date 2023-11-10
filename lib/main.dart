@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/conclusionbar.dart';
+import 'package:incomeandexpensesapp/jsonserialization/dashboard.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String? jsonStringDM = pref.getString('Date11Dm');
     List<Data> dataL = (jsonString != null)
         ? (json.decode(jsonString) as List<dynamic>)
+            .cast<Map<String, dynamic>>()
             .map((e) => Data.fromJson(e))
             .toList()
         : [];
@@ -111,6 +113,9 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Note> datalist = isDayAvailable ? data[whereday].data : [];
     int incomeamt = context.watch<Stater>().incomeAmount();
     int expensamt = context.watch<Stater>().expensAmount();
+    bool isSelectMonthAvailable =
+        context.watch<Stater>().isSelectMonthAvailable();
+    DashBoard dashBoardData = context.watch<Stater>().calDashboard();
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
@@ -139,16 +144,38 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
       ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (_) => const ChoicePage(),
-          );
-          debugPrint(whereDateInData(selectDateINData, context).toString());
-        },
-        tooltip: 'Add',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (isSelectMonthAvailable)
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DashBoardPage(
+                            data: dashBoardData,
+                          )),
+                );
+              },
+              tooltip: 'DashBoard',
+              child: const Icon(Icons.note),
+            ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => const ChoicePage(),
+              );
+              debugPrint(whereDateInData(selectDateINData, context).toString());
+            },
+            tooltip: 'Add',
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }

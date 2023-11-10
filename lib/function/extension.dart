@@ -3,9 +3,12 @@ import 'package:intl/intl.dart';
 import './function.dart';
 import 'package:provider/provider.dart';
 
-
 String formatToyMd(DateTime date) {
   return DateFormat.yMd().format(date);
+}
+
+DateTime parseDateFromJson(String dateString) {
+  return DateFormat.yMd().parse(dateString);
 }
 
 bool isSelectDayAvailablefn(String date, BuildContext context) {
@@ -19,6 +22,28 @@ int whereDateInData(String date, BuildContext context) {
   return Provider.of<Stater>(context, listen: false)
       .data
       .indexWhere((json) => json.Date == date);
+}
+
+String thday(DateTime date) {
+  String day = DateFormat('EEE').format(date);
+  String tday = 'วัน';
+  switch (day) {
+    case 'Sun':
+      tday += 'อาทิตย์';
+    case 'Mon':
+      tday += 'จันทร์';
+    case 'Tue':
+      tday += 'อังคาร';
+    case 'Wed':
+      tday += 'พุธ';
+    case 'Thu':
+      tday += 'พฤหัสบดี';
+    case 'Fri':
+      tday += 'ศุกร์';
+    case 'Sat':
+      tday += 'เสาร์';
+  }
+  return tday;
 }
 
 String thmonth(DateTime date) {
@@ -51,4 +76,15 @@ String thmonth(DateTime date) {
       tmonth += 'ธันวาคม';
   }
   return tmonth;
+}
+
+String monthAndYearTH(DateTime date) {
+  String month = thmonth(date);
+  int year = date.year;
+  return 'เดือน$month ปี $year';
+}
+
+String dateThDay(String date) {
+  int day = parseDateFromJson(date).day;
+  return 'วันที่ $day';
 }

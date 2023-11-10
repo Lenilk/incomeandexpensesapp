@@ -1,6 +1,7 @@
 // import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/jsonserialization/dashboard.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:intl/intl.dart';
@@ -18,24 +19,7 @@ class Stater with ChangeNotifier {
   List<String> dateMark = [];
   int whereday = 0;
   String selectDateTitle() {
-    String day = DateFormat('EEE').format(selectDate);
-    String tday = 'วัน';
-    switch (day) {
-      case 'Sun':
-        tday += 'อาทิตย์';
-      case 'Mon':
-        tday += 'จันทร์';
-      case 'Tue':
-        tday += 'อังคาร';
-      case 'Wed':
-        tday += 'พุธ';
-      case 'Thu':
-        tday += 'พฤหัสบดี';
-      case 'Fri':
-        tday += 'ศุกร์';
-      case 'Sat':
-        tday += 'เสาร์';
-    }
+    String tday = thday(selectDate);
     String month = thmonth(selectDate);
     return DateFormat('$tday วันที่ d $month').format(selectDate);
   }
@@ -164,5 +148,41 @@ class Stater with ChangeNotifier {
   void changeSelectDate(DateTime newDate) {
     selectDate = newDate;
     notifyListeners();
+  }
+
+  bool isSelectMonthAvailable() {
+    for (var note in data) {
+      DateTime notes = parseDateFromJson(note.Date);
+      if (selectDate.year == notes.year && selectDate.month == notes.month) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  DashBoard calDashboard() {
+    List<Data> datainMonth = [];
+    int income = 0;
+    int expens = 0;
+    int total = 0;
+    String title = monthAndYearTH(selectDate);
+    if (isSelectMonthAvailable()) {
+      for (Data some in data) {
+        DateTime somes = parseDateFromJson(some.Date);
+        if (selectDate.year == somes.year && selectDate.month == somes.month) {
+          datainMonth.add(some);
+          for (Note dataInSome in some.data) {
+            switch (dataInSome.type) {
+              case 'income':
+                income += dataInSome.amount;
+              case 'expens':
+                expens += dataInSome.amount;
+            }
+            total += dataInSome.amount;
+          }
+        }
+      }
+    }
+    return DashBoard(title, datainMonth, income, expens, total);
   }
 }

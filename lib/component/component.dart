@@ -5,3 +5,4 @@ export './choicepage.dart';
 export './databox.dart';
 export './deletepage.dart';
 export './update.dart';
+export './dashBoardPage.dart';
