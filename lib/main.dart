@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
         else
           const Expanded(
             child: Center(
-              child: Text('No data'),
+              child: Text('ไม่มีรายการ'),
             ),
           ),
       ]),
