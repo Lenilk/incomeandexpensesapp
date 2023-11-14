@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/conclusionbar.dart';
-import 'package:incomeandexpensesapp/jsonserialization/dashboard.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
@@ -12,14 +11,9 @@ import 'component/component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Stater()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => Stater()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,10 +25,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MediaQuery(
-        data: MediaQueryData(textScaleFactor: 1.0),
-        child: MyHomePage(),
-      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MediaQuery(
+              data: MediaQueryData(textScaleFactor: 1.0),
+              child: MyHomePage(),
+            ),
+        '/dashboard': (context) => const MediaQuery(
+              data: MediaQueryData(textScaleFactor: 1.0),
+              child: DashBoardPage(),
+            ),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
@@ -115,10 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
     int expensamt = context.watch<Stater>().expensAmount();
     bool isSelectMonthAvailable =
         context.watch<Stater>().isSelectMonthAvailable();
-    DashBoard dashBoardData = context.watch<Stater>().calDashboard();
+
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
+        toolbarHeight: 80,
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Padding(
@@ -149,17 +150,12 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           if (isSelectMonthAvailable)
             FloatingActionButton(
+              heroTag: 'dashboard',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DashBoardPage(
-                            data: dashBoardData,
-                          )),
-                );
+                Navigator.pushNamed(context, '/dashboard');
               },
               tooltip: 'DashBoard',
-              child: const Icon(Icons.note),
+              child: const Icon(Icons.assessment_outlined),
             ),
           const SizedBox(
             height: 10,

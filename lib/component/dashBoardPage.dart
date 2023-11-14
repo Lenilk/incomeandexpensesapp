@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/conclusionbar.dart';
+import 'package:incomeandexpensesapp/function/function.dart';
 import 'package:incomeandexpensesapp/jsonserialization/dashboard.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
+import 'package:provider/provider.dart';
 
 class DashBoardPage extends StatefulWidget {
-  final DashBoard data;
-  const DashBoardPage({Key? key, required this.data}) : super(key: key);
+  const DashBoardPage({super.key});
 
   @override
   State<DashBoardPage> createState() => _DashBoardPageState();
@@ -14,7 +15,7 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   @override
   Widget build(BuildContext context) {
-    DashBoard widgetData = widget.data;
+    DashBoard widgetData = context.read<Stater>().calDashboard();
     String title = widgetData.title;
     List<Data> data = widgetData.data;
     int income = widgetData.income;
@@ -22,7 +23,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
     int total = widgetData.total;
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(title)),
+        toolbarHeight: 80,
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 20),
+          ),
+        ),
       ),
       body: ListView(
           children: [ConclusionBar(incomeamt: income, expensamt: expens)]),
