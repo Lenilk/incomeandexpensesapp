@@ -178,11 +178,11 @@ class Stater with ChangeNotifier {
               case 'expens':
                 expens += dataInSome.amount;
             }
-            total += dataInSome.amount;
           }
         }
       }
     }
+    total = income - expens;
     return DashBoard(title, datainMonth, income, expens, total);
   }
 }
