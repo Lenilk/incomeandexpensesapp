@@ -17,6 +17,7 @@ class Datalist extends StatelessWidget {
                     itemCount: data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return DataBox(
+                          key: UniqueKey(),
                           type: data[index].type,
                           data: data[index],
                           index: index);

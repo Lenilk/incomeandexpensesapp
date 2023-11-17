@@ -27,13 +27,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const MediaQuery(
-              data: MediaQueryData(textScaleFactor: 1.0),
-              child: MyHomePage(),
+        '/': (context) => MediaQuery(
+              data: const MediaQueryData(textScaleFactor: 1.0),
+              child: MyHomePage(key: UniqueKey()),
             ),
-        '/dashboard': (context) => const MediaQuery(
-              data: MediaQueryData(textScaleFactor: 1.0),
-              child: DashBoardPage(),
+        '/dashboard': (context) => MediaQuery(
+              data: const MediaQueryData(textScaleFactor: 1.0),
+              child: DashBoardPage(
+                key: UniqueKey(),
+              ),
             ),
       },
       debugShowCheckedModeBanner: false,
@@ -133,9 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(children: [
         const Calender(),
         if (isDayAvailable)
-          ConclusionBar(incomeamt: incomeamt, expensamt: expensamt),
+          ConclusionBar(
+            incomeamt: incomeamt,
+            expensamt: expensamt,
+            key: UniqueKey(),
+          ),
         if (isDayAvailable)
           Datalist(
+            key: UniqueKey(),
             data: datalist,
           )
         else
@@ -150,6 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           if (isSelectMonthAvailable)
             FloatingActionButton(
+              key: UniqueKey(),
               heroTag: 'dashboard',
               onPressed: () {
                 Navigator.pushNamed(context, '/dashboard');
@@ -164,7 +172,9 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (_) => const ChoicePage(),
+                builder: (_) => ChoicePage(
+                  key: UniqueKey(),
+                ),
               );
               debugPrint(whereDateInData(selectDateINData, context).toString());
             },

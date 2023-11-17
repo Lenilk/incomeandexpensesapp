@@ -49,7 +49,6 @@ class _UpdatePageState extends State<UpdatePage> {
                 child: Column(
                   children: [
                     TextFormField(
-                      autofocus: true,
                       controller: infoEditer,
                       decoration: const InputDecoration(hintText: 'อะไร'),
                       validator: (value) {
@@ -60,7 +59,6 @@ class _UpdatePageState extends State<UpdatePage> {
                       },
                     ),
                     TextFormField(
-                      autofocus: true,
                       controller: amountEditer,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -111,6 +109,7 @@ class _UpdatePageState extends State<UpdatePage> {
                         json: json,
                         index: index,
                         date: widget.date,
+                        key: UniqueKey(),
                       ),
                   barrierDismissible: false);
             }

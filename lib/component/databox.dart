@@ -34,7 +34,7 @@ class _DataBoxState extends State<DataBox> {
       onLongPress: () {
         showDialog(
           context: context,
-          builder: (_) => DeletePage(data: data, date: date),
+          builder: (_) => DeletePage(data: data, date: date, key: UniqueKey()),
         );
       },
       onTap: () {
@@ -44,6 +44,7 @@ class _DataBoxState extends State<DataBox> {
             data: data,
             date: date,
             index: widget.index,
+            key: UniqueKey(),
           ),
         );
       },
