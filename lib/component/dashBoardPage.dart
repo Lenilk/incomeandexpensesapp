@@ -91,7 +91,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
         ),
         PieChart(
           key: UniqueKey(),
-          dataMap: {'expens': expens.toDouble(), 'income': income.toDouble()},
+          dataMap: {'รายจ่าย': expens.toDouble(), 'รายรับ': income.toDouble()},
           chartLegendSpacing: 16,
           chartRadius: 150,
           colorList: const [
