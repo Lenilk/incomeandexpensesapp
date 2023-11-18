@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/conclusionbar.dart';
 import 'package:incomeandexpensesapp/function/function.dart';
@@ -29,6 +30,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   Widget listData(List<Note?> data) {
     return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: data.length,
         itemBuilder: (context, dataIndex) {
@@ -134,6 +136,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: datathismonth.length,
               itemBuilder: (BuildContext context, index) {
