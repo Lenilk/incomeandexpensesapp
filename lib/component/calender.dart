@@ -41,6 +41,7 @@ class _CalenderState extends State<Calender> {
       calendarFormat: CalendarFormat.month,
       enabledDayPredicate: (day) =>
           day.isBefore(DateTime.now()) || isSameDay(day, DateTime.now()),
+
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, focusedDay) {
           for (DateTime d in dateMark) {

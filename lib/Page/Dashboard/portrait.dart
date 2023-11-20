@@ -7,14 +7,14 @@ import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class DashBoardPage extends StatefulWidget {
-  const DashBoardPage({super.key});
+class DashBoardPortraitPage extends StatefulWidget {
+  const DashBoardPortraitPage({super.key});
 
   @override
-  State<DashBoardPage> createState() => _DashBoardPageState();
+  State<DashBoardPortraitPage> createState() => _DashBoardPortraitPageState();
 }
 
-class _DashBoardPageState extends State<DashBoardPage> {
+class _DashBoardPortraitPageState extends State<DashBoardPortraitPage> {
   Widget textInfo(String data) {
     return Expanded(
       flex: 70,
@@ -114,8 +114,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
               showChartValuesOutside: true,
               decimalPlaces: 0,
               chartValueStyle: TextStyle(color: Colors.orangeAccent)),
-          // gradientList: ---To add gradient colors---
-          // emptyColorGradient: ---Empty Color gradient---
         ),
         const SizedBox(
           height: 8,

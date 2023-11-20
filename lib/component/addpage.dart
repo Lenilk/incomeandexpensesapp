@@ -63,7 +63,7 @@ class _AddPageState extends State<AddPage> {
                   controller: noteEditer,
                   decoration: const InputDecoration(hintText: 'หมายเหตุ'),
                   maxLines: 3,
-                ),
+                )
               ],
             )),
       ),
@@ -80,8 +80,9 @@ class _AddPageState extends State<AddPage> {
             if (_form.currentState!.validate()) {
               String info = infoEditer.value.text;
               String amount = amountEditer.value.text;
-              String note =noteEditer.value.text;
-              Note json = Note(info, int.parse(amount), note, isincome ? 'income' : 'expens');
+              String note = noteEditer.value.text;
+              Note json = Note(info, int.parse(amount), note,
+                  isincome ? 'income' : 'expens');
               //   "info": info,
               //   "amount": amount,
               //   "note": note ?? "",

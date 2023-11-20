@@ -4,25 +4,24 @@ import './databox.dart';
 
 class Datalist extends StatelessWidget {
   final List<Note> data;
-  const Datalist({Key? key, required this.data}) : super(key: key);
+  final bool isAvailable;
+  const Datalist({Key? key, required this.data, required this.isAvailable})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Padding(
-            padding: const EdgeInsets.only(top: 0),
-            child: Column(children: [
-              Expanded(
-                child: ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return DataBox(
-                          key: UniqueKey(),
-                          type: data[index].type,
-                          data: data[index],
-                          index: index);
-                    }),
-              ),
-            ])));
+    return ListView.builder(
+        // physics: (canScroll) ? null : const NeverScrollableScrollPhysics(),
+        // shrinkWrap: shrinkwrap,
+        key: UniqueKey(),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return DataBox(
+              key: UniqueKey(),
+              isAvailable: isAvailable,
+              type: data[index].type,
+              data: data[index],
+              index: index);
+        });
   }
 }

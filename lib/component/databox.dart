@@ -5,11 +5,16 @@ import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 
 class DataBox extends StatefulWidget {
+  final bool isAvailable;
   final String type;
   final Note data;
   final int index;
   const DataBox(
-      {Key? key, required this.type, required this.data, required this.index})
+      {Key? key,
+      required this.type,
+      required this.data,
+      required this.index,
+      required this.isAvailable})
       : super(key: key);
   @override
   State<DataBox> createState() => _DataBoxState();
@@ -23,6 +28,21 @@ class _DataBoxState extends State<DataBox> {
     );
   }
 
+  Future<dynamic> isNotAvailableDialog() {
+    return showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: const Text('โปรดหมุนหน้าจอเป็นแนวตั้ง'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('ตกลง'))
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isincome = widget.type == 'income';
@@ -32,21 +52,30 @@ class _DataBoxState extends State<DataBox> {
         Provider.of<Stater>(context, listen: false).selectDateString();
     return GestureDetector(
       onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (_) => DeletePage(data: data, date: date, key: UniqueKey()),
-        );
+        if (widget.isAvailable) {
+          showDialog(
+            context: context,
+            builder: (_) =>
+                DeletePage(data: data, date: date, key: UniqueKey()),
+          );
+        } else {
+          isNotAvailableDialog();
+        }
       },
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (_) => UpdatePage(
-            data: data,
-            date: date,
-            index: widget.index,
-            key: UniqueKey(),
-          ),
-        );
+        if (widget.isAvailable) {
+          showDialog(
+            context: context,
+            builder: (_) => UpdatePage(
+              data: data,
+              date: date,
+              index: widget.index,
+              key: UniqueKey(),
+            ),
+          );
+        } else {
+          isNotAvailableDialog();
+        }
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
