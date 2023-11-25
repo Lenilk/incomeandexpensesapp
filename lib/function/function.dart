@@ -83,6 +83,14 @@ class Stater with ChangeNotifier {
     notifyListeners();
   }
 
+  List<Note> dataListInSelectDa(BuildContext context) {
+    String selectDateINData = selectDateString();
+    bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
+    if (!isDayAvailable) return [];
+    int whereday = whereDateInData(selectDateINData, context);
+    return data[whereday].data;
+  }
+
   void addDateAndData(String date, Note dataAdd) {
     data.add(Data(date, [dataAdd]));
     String dateDm = (DateFormat.yMd().parse(date)).toString();

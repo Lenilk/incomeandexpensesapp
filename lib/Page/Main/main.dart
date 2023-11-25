@@ -9,8 +9,12 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
       return orientation == Orientation.portrait
-          ? const MainPortraitPage()
-          : const MainLandScapePage();
+          ? MainPortraitPage(
+              key: UniqueKey(),
+            )
+          : MainLandScapePage(
+              key: UniqueKey(),
+            );
     });
   }
 }

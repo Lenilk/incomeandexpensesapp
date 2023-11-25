@@ -30,6 +30,7 @@ class _MainLandScapePageState extends State<MainLandScapePage> {
         context.watch<Stater>().isSelectMonthAvailable();
     debugPrint(MediaQuery.of(context).size.height.toString());
     return Scaffold(
+      key:UniqueKey(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         toolbarHeight: 60,

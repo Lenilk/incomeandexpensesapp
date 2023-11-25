@@ -25,11 +25,13 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MediaQuery(
-              data: MediaQueryData(textScaleFactor: 1.0),
+              data: MediaQueryData(),
+              // data: MediaQueryData(textScaler: TextScaler.linear(1.0)),
               child: MyHomePage(),
             ),
         '/dashboard': (context) => const MediaQuery(
-              data: MediaQueryData(textScaleFactor: 1.0),
+              data: MediaQueryData(),
+              // data: MediaQueryData(textScaler: TextScaler.linear(1.0)),
               child: DashBoardPage(),
             ),
       },

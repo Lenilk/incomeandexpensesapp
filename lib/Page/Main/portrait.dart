@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/component.dart';
-import 'package:incomeandexpensesapp/jsonserialization/data.dart';
-import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
-
-import '../../function/extension.dart';
 import '../../function/function.dart';
 
 class MainPortraitPage extends StatefulWidget {
@@ -17,58 +13,65 @@ class MainPortraitPage extends StatefulWidget {
 class _MainPortraitPageState extends State<MainPortraitPage> {
   @override
   Widget build(BuildContext context) {
-    List<Data> data = context.watch<Stater>().data;
-    String selectDateINData =
-        Provider.of<Stater>(context, listen: true).selectDateString();
-    int whereday = whereDateInData(selectDateINData, context);
-    bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
-    List<Note> datalist = isDayAvailable ? data[whereday].data : [];
-    int incomeamt = context.watch<Stater>().incomeAmount();
-    int expensamt = context.watch<Stater>().expensAmount();
-    bool isSelectMonthAvailable =
-        context.watch<Stater>().isSelectMonthAvailable();
-
+    // String selectDateINData =
+    //     Provider.of<Stater>(context, listen: true).selectDateString();
+    // int whereday = whereDateInData(selectDateINData, context);
+    // bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
+    // List<Note> datalist = isDayAvailable ? data[whereday].data : [];
     return Scaffold(
+      key: UniqueKey(),
       appBar: AppBar(
         toolbarHeight: 80,
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Padding(
           padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-          child: Text(
-            Provider.of<Stater>(context).selectDateTitle(),
-            style: const TextStyle(fontSize: 20),
-          ),
+          child: Consumer<Stater>(builder: (context, data, child) {
+            return Text(
+              data.selectDateTitle(),
+              style: const TextStyle(fontSize: 20),
+            );
+          }),
         ),
       ),
       body: Column(children: [
         const Calender(),
-        if (isDayAvailable)
-          ConclusionBar(
-            incomeamt: incomeamt,
-            expensamt: expensamt,
+        Consumer<Stater>(builder: (context, data, child) {
+          bool isDayAvailable = data.isSelectDayAvailable(context);
+          if (!isDayAvailable) {
+            return const SizedBox();
+          }
+          return ConclusionBar(
+            incomeamt: data.incomeAmount(),
+            expensamt: data.expensAmount(),
             key: UniqueKey(),
-          ),
-        if (isDayAvailable)
-          Expanded(
+          );
+        }),
+        Consumer<Stater>(builder: (context, data, child) {
+          bool isDayAvailable = data.isSelectDayAvailable(context);
+          if (!isDayAvailable) {
+            return const Expanded(
+                child: Center(
+              child: Text('ไม่มีรายการ'),
+            ));
+          }
+          return Expanded(
             child: Datalist(
               key: UniqueKey(),
-              data: datalist,
+              data: data.dataListInSelectDa(context),
               isAvailable: true,
             ),
-          )
-        else
-          const Expanded(
-            child: Center(
-              child: Text('ไม่มีรายการ'),
-            ),
-          ),
+          );
+        })
       ]),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (isSelectMonthAvailable)
-            FloatingActionButton(
+          Consumer<Stater>(builder: (context, data, child) {
+            if (!data.isSelectMonthAvailable()) {
+              return const SizedBox();
+            }
+            return FloatingActionButton(
               key: UniqueKey(),
               heroTag: 'dashboard',
               onPressed: () {
@@ -76,7 +79,8 @@ class _MainPortraitPageState extends State<MainPortraitPage> {
               },
               tooltip: 'DashBoard',
               child: const Icon(Icons.assessment_outlined),
-            ),
+            );
+          }),
           const SizedBox(
             height: 10,
           ),
@@ -88,7 +92,6 @@ class _MainPortraitPageState extends State<MainPortraitPage> {
                   key: UniqueKey(),
                 ),
               );
-              debugPrint(whereDateInData(selectDateINData, context).toString());
             },
             tooltip: 'Add',
             child: const Icon(Icons.add),
