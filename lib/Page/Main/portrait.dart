@@ -38,9 +38,7 @@ class _MainPortraitPageState extends State<MainPortraitPage> {
       body: const Column(children: [
         Calender(),
         ConclusionBarMainPage(),
-        DataListMainPage(
-          isAvailable: true,
-        )
+        DataListMainPage(isAvailable: true)
       ]),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/component.dart';
 import 'package:incomeandexpensesapp/component/datalistmain.dart';
-import 'package:incomeandexpensesapp/function/extension.dart';
 import 'package:incomeandexpensesapp/function/function.dart';
-import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
-
-import '../../jsonserialization/data.dart';
 
 class MainLandScapePage extends StatefulWidget {
   const MainLandScapePage({super.key});
@@ -19,8 +15,6 @@ class MainLandScapePage extends StatefulWidget {
 class _MainLandScapePageState extends State<MainLandScapePage> {
   @override
   Widget build(BuildContext context) {
-    bool isSelectMonthAvailable =
-        context.watch<Stater>().isSelectMonthAvailable();
     debugPrint(MediaQuery.of(context).size.height.toString());
     return Scaffold(
       key: UniqueKey(),

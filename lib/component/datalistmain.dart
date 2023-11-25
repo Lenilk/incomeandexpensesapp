@@ -13,16 +13,17 @@ class DataListMainPage extends StatelessWidget {
     return Consumer<Stater>(builder: (context, data, child) {
       bool isDayAvailable = data.isSelectDayAvailable(context);
       if (!isDayAvailable) {
-        return const Center(
-          child: Text('ไม่มีรายการ'),
+        return const Expanded(
+          child: Center(
+            child: Text('ไม่มีรายการ'),
+          ),
         );
       }
       return Expanded(
         child: Datalist(
-          key: UniqueKey(),
-          data: data.dataListInSelectDay(context),
-          isAvailable: isAvailable,
-        ),
+            key: UniqueKey(),
+            data: data.dataListInSelectDay(context),
+            isAvailable: isAvailable),
       );
     });
   }
