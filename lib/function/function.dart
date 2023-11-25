@@ -83,7 +83,7 @@ class Stater with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Note> dataListInSelectDa(BuildContext context) {
+  List<Note> dataListInSelectDay(BuildContext context) {
     String selectDateINData = selectDateString();
     bool isDayAvailable = isSelectDayAvailablefn(selectDateINData, context);
     if (!isDayAvailable) return [];

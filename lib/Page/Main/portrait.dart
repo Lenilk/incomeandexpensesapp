@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/component.dart';
+import 'package:incomeandexpensesapp/component/datalistmain.dart';
 import 'package:provider/provider.dart';
 import '../../function/function.dart';
 
@@ -34,35 +35,12 @@ class _MainPortraitPageState extends State<MainPortraitPage> {
           }),
         ),
       ),
-      body: Column(children: [
-        const Calender(),
-        Consumer<Stater>(builder: (context, data, child) {
-          bool isDayAvailable = data.isSelectDayAvailable(context);
-          if (!isDayAvailable) {
-            return const SizedBox();
-          }
-          return ConclusionBar(
-            incomeamt: data.incomeAmount(),
-            expensamt: data.expensAmount(),
-            key: UniqueKey(),
-          );
-        }),
-        Consumer<Stater>(builder: (context, data, child) {
-          bool isDayAvailable = data.isSelectDayAvailable(context);
-          if (!isDayAvailable) {
-            return const Expanded(
-                child: Center(
-              child: Text('ไม่มีรายการ'),
-            ));
-          }
-          return Expanded(
-            child: Datalist(
-              key: UniqueKey(),
-              data: data.dataListInSelectDa(context),
-              isAvailable: true,
-            ),
-          );
-        })
+      body: const Column(children: [
+        Calender(),
+        ConclusionBarMainPage(),
+        DataListMainPage(
+          isAvailable: true,
+        )
       ]),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

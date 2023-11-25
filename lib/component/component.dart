@@ -6,3 +6,4 @@ export './databox.dart';
 export './deletepage.dart';
 export './update.dart';
 export './conclusionbar.dart';
+export './conclusionbarmain.dart';

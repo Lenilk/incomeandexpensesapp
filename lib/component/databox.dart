@@ -52,15 +52,10 @@ class _DataBoxState extends State<DataBox> {
         Provider.of<Stater>(context, listen: false).selectDateString();
     return GestureDetector(
       onLongPress: () {
-        if (widget.isAvailable) {
-          showDialog(
-            context: context,
-            builder: (_) =>
-                DeletePage(data: data, date: date, key: UniqueKey()),
-          );
-        } else {
-          isNotAvailableDialog();
-        }
+        showDialog(
+          context: context,
+          builder: (_) => DeletePage(data: data, date: date, key: UniqueKey()),
+        );
       },
       onTap: () {
         if (widget.isAvailable) {
