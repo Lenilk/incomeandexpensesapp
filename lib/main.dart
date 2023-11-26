@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +52,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Data> dataS = [];
   List<String> dateMark = [];
+  Future<String> fetchData() async {
+    http.Response response =
+        await http.get(Uri.parse('http://192.168.1.229:3000/users'));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Fail');
+    }
+  }
+
   Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String? jsonString = pref.getString('Data11');
@@ -105,6 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // });
     // }
 
-    return const MainPage();
+    return const LoginPage();
   }
 }
