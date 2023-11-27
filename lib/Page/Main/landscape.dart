@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/component.dart';
 import 'package:incomeandexpensesapp/component/datalistmain.dart';
-import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 

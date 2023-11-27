@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/function/user.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:provider/provider.dart';
-import './function/function.dart';
+import 'function/stater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:incomeandexpensesapp/Page/page.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => Stater()),
+    ChangeNotifierProvider(create: (_) => User()),
   ], child: const MyApp()));
 }
 
@@ -24,16 +26,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const MediaQuery(
-              data: MediaQueryData(),
-              // data: MediaQueryData(textScaler: TextScaler.linear(1.0)),
-              child: MyHomePage(),
-            ),
-        '/dashboard': (context) => const MediaQuery(
-              data: MediaQueryData(),
-              // data: MediaQueryData(textScaler: TextScaler.linear(1.0)),
-              child: DashBoardPage(),
-            ),
+        '/': (context) => const MyHomePage(),
+        '/dashboard': (context) => const DashBoardPage(),
+        'register': (context) => const RegisterPage(),
+        'login': (context) => const LoginPage()
       },
       debugShowCheckedModeBanner: false,
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
-import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:incomeandexpensesapp/function/stater.dart';
 
 class DeletePage extends StatefulWidget {
   final Note data;

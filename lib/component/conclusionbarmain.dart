@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/conclusionbar.dart';
-import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:provider/provider.dart';
 
 class ConclusionBarMainPage extends StatelessWidget {

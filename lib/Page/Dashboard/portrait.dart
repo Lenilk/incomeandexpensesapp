@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/conclusionbar.dart';
-import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:incomeandexpensesapp/jsonserialization/dashboard.dart';
 import 'package:incomeandexpensesapp/jsonserialization/data.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';

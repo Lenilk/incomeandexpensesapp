@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import './function.dart';
+import 'stater.dart';
 import 'package:provider/provider.dart';
 
 String formatToyMd(DateTime date) {

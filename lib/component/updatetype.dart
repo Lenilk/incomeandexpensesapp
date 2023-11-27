@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:incomeandexpensesapp/function/function.dart';
+import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
 

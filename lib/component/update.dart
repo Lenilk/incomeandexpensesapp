@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:incomeandexpensesapp/component/updatetype.dart';
 import 'package:incomeandexpensesapp/jsonserialization/note.dart';
 import 'package:provider/provider.dart';
-import '.././function/function.dart';
+import '../function/stater.dart';
 
 class UpdatePage extends StatefulWidget {
   final Note data;

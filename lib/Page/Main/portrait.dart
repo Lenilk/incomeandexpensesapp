@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/component/component.dart';
 import 'package:incomeandexpensesapp/component/datalistmain.dart';
 import 'package:provider/provider.dart';
-import '../../function/function.dart';
+import '../../function/stater.dart';
 
 class MainPortraitPage extends StatefulWidget {
   const MainPortraitPage({super.key});
