@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:incomeandexpensesapp/function/user.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,6 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool loading = false;
   final _form = GlobalKey<FormState>();
   final usernameEditor = TextEditingController();
   final passwordEditor = TextEditingController();
@@ -16,10 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     return await http.get(Uri.parse('http://192.168.1.229:3000/users'));
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  Map<String, dynamic> user = {'username': 'Meaw', 'password': '1234'};
 
   @override
   void dispose() {
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: () =>
-                              Navigator.popAndPushNamed(context, 'register'),
+                              Navigator.of(context).pushNamed('/register'),
                           child: const Text('ลงชื่อเข้าใช้!',
                               style: TextStyle(
                                   color: Colors.blue,
@@ -94,10 +94,49 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     ElevatedButton(
                         onPressed: () {
                           if (_form.currentState!.validate()) {
-                            _form.currentState!.reset();
+                            FocusScope.of(context).unfocus();
+                            String username = usernameEditor.value.text;
+                            String password = passwordEditor.value.text;
+                            debugPrint(username);
+                            debugPrint(password);
+                            debugPrint(user['username']);
+                            debugPrint(user['password']);
+                            showDialog(
+                              context: context,
+                              builder: (_) => const SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: Center(
+                                      child: CircularProgressIndicator())),
+                            );
+                            if (username == user['username'] &&
+                                password == user['password']) {
+                              Provider.of<User>(context, listen: false)
+                                  .setUser(username);
+                              _form.currentState!.reset();
+                              Navigator.pop(context);
+                            } else {
+                              Navigator.pop(context);
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                        title: const Text(
+                                            'ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง'),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('ตกลง'))
+                                        ],
+                                      ));
+                            }
                           }
                         },
                         child: const Text('เข้าสู้ระบบ'))

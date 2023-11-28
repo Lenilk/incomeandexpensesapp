@@ -3,9 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class User with ChangeNotifier {
   String username = '';
-
-  void setUser(String username) {
-    this.username = username;
+  void setUser(String user) {
+    username = user;
     keepUserINSP(username);
     notifyListeners();
   }

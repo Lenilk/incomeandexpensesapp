@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(),
         '/dashboard': (context) => const DashBoardPage(),
-        'register': (context) => const RegisterPage(),
-        'login': (context) => const LoginPage()
+        '/register': (context) => const RegisterPage(),
+        '/login': (context) => const LoginPage()
       },
       debugShowCheckedModeBanner: false,
     );
@@ -48,6 +48,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Data> dataS = [];
   List<String> dateMark = [];
+
+  String user = '';
   Future<String> fetchData() async {
     http.Response response =
         await http.get(Uri.parse('http://192.168.1.229:3000/users'));
@@ -60,8 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove('user');
     String? jsonString = pref.getString('Data11');
     String? jsonStringDM = pref.getString('Date11Dm');
+    String? userSP = pref.getString('user');
+    if (userSP != '' && userSP != null) {
+      user = userSP;
+    }
     List<Data> dataL = (jsonString != null)
         ? (json.decode(jsonString) as List<dynamic>)
             .cast<Map<String, dynamic>>()
@@ -98,19 +105,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getData().then((e) => Provider.of<Stater>(context, listen: false)
-        .initSetData(dataS, dateMark));
+    getData().then((e) {
+      Provider.of<Stater>(context, listen: false).initSetData(dataS, dateMark);
+      Provider.of<User>(context, listen: false).setUser(user);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // if(onStart){
-    // Provider.of<Stater>(context,listen: false).initSetData(dataS);
-    // setState(() {
-    //   onStart=false;
-    // });
-    // }
-
-    return const LoginPage();
+    return (context.watch<User>().username != '')
+        ? const MainPage()
+        : const LoginPage();
   }
 }
