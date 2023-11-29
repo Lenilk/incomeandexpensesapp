@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:incomeandexpensesapp/Page/Main/landscape.dart';
-import 'package:incomeandexpensesapp/Page/Main/portrait.dart';
+import 'package:incomeandexpensesapp/Page/page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -9,10 +8,10 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
       return orientation == Orientation.portrait
-          ? MainPortraitPage(
+          ? PortraitLayout(
               key: UniqueKey(),
             )
-          : MainLandScapePage(
+          : LandScapeLayout(
               key: UniqueKey(),
             );
     });

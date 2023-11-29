@@ -13,4 +13,15 @@ class User with ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     pref.setString('user', username);
   }
+
+  void removeUser() {
+    username = '';
+    removeUser();
+    notifyListeners();
+  }
+
+  void removeUserINSP() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.remove('user');
+  }
 }

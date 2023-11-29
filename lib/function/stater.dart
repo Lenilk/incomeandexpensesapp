@@ -16,8 +16,13 @@ class Stater with ChangeNotifier {
   List<Data> data = [
     //{info: ffhjj, amount: 665, note: , type: income}
   ];
+  int selectPage = 0;
   List<String> dateMark = [];
   int whereday = 0;
+  void onSelectPage(int index) {
+    selectPage = index;
+  }
+
   String selectDateTitle() {
     String tday = thday(selectDate);
     String month = thmonth(selectDate);

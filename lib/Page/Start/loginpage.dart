@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:incomeandexpensesapp/function/user.dart';
@@ -15,11 +17,30 @@ class _LoginPageState extends State<LoginPage> {
   final _form = GlobalKey<FormState>();
   final usernameEditor = TextEditingController();
   final passwordEditor = TextEditingController();
-  Future<http.Response> login() async {
-    return await http.get(Uri.parse('http://192.168.1.229:3000/users'));
+  bool haveError = false;
+  Future<bool> login(Map<String, dynamic> body) async {
+    Map<String, String> header = {'Content-type': 'application/json'};
+    http.Response response = await http.post(
+        Uri.parse('http://192.168.1.229:3000/login'),
+        body: json.encode(body),
+        headers: header);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> resBody = jsonDecode(response.body);
+      bool isSuccess = resBody['success'];
+      if (isSuccess) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      setState(() {
+        haveError = true;
+      });
+      return false;
+    }
   }
 
-  Map<String, dynamic> user = {'username': 'Meaw', 'password': '1234'};
+  bool onNotSummit = true;
 
   @override
   void dispose() {
@@ -48,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextFormField(
                       controller: usernameEditor,
+                      enabled: onNotSummit,
                       decoration: const InputDecoration(
                         labelText: 'ชื่อผู้ใช้',
                       ),
@@ -63,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
+                      enabled: onNotSummit,
                       decoration: const InputDecoration(
                         labelText: 'รหัสผ่าน',
                       ),
@@ -100,13 +123,15 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                         onPressed: () {
                           if (_form.currentState!.validate()) {
+                            setState(() {
+                              onNotSummit = false;
+                              haveError = false;
+                            });
                             FocusScope.of(context).unfocus();
                             String username = usernameEditor.value.text;
                             String password = passwordEditor.value.text;
                             debugPrint(username);
                             debugPrint(password);
-                            debugPrint(user['username']);
-                            debugPrint(user['password']);
                             showDialog(
                               context: context,
                               builder: (_) => const SizedBox(
@@ -115,28 +140,68 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Center(
                                       child: CircularProgressIndicator())),
                             );
-                            if (username == user['username'] &&
-                                password == user['password']) {
-                              Provider.of<User>(context, listen: false)
-                                  .setUser(username);
-                              _form.currentState!.reset();
+                            Map<String, dynamic> body = {
+                              'username': username,
+                              'password': password
+                            };
+                            login(body).then((isSuccess) {
                               Navigator.pop(context);
-                            } else {
-                              Navigator.pop(context);
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                        title: const Text(
-                                            'ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง'),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('ตกลง'))
-                                        ],
-                                      ));
-                            }
+                              if (isSuccess) {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                          title:
+                                              const Text('เข้าสู่ระบบสำเร็จ'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Provider.of<User>(context,
+                                                          listen: false)
+                                                      .setUser(username);
+                                                  if (Navigator.of(context)
+                                                      .canPop()) {
+                                                    Navigator.of(context).pop();
+                                                  }
+                                                },
+                                                child: const Text('ตกลง'))
+                                          ],
+                                        ));
+                                _form.currentState!.reset();
+                              } else if (!isSuccess && haveError) {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                          title: const Text('มีบางอย่าผิดพลาด'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    onNotSummit = true;
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('ตกลง'))
+                                          ],
+                                        ));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                          title: const Text(
+                                              'ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  setState(() {
+                                                    onNotSummit = true;
+                                                  });
+                                                },
+                                                child: const Text('ตกลง'))
+                                          ],
+                                        ));
+                              }
+                            });
                           }
                         },
                         child: const Text('เข้าสู้ระบบ'))

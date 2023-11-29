@@ -64,111 +64,120 @@ class _DashBoardPortraitPageState extends State<DashBoardPortraitPage> {
 
   @override
   Widget build(BuildContext context) {
-    DashBoard widgetData = context.read<Stater>().calDashboard();
-    String title = widgetData.title;
-    List<Data> datathismonth = widgetData.data;
-    int income = widgetData.income;
-    int expens = widgetData.expens;
-    int total = widgetData.total;
+    if (context.read<Stater>().isSelectMonthAvailable()) {
+      DashBoard widgetData = context.read<Stater>().calDashboard();
+      String title = widgetData.title;
+      List<Data> datathismonth = widgetData.data;
+      int income = widgetData.income;
+      int expens = widgetData.expens;
+      int total = widgetData.total;
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 80,
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 20),
-          ),
-        ),
-      ),
-      body: ListView(children: [
-        const SizedBox(
-          height: 16,
-        ),
-        PieChart(
-          key: UniqueKey(),
-          dataMap: {'รายจ่าย': expens.toDouble(), 'รายรับ': income.toDouble()},
-          chartLegendSpacing: 16,
-          chartRadius: 150,
-          colorList: const [
-            Colors.redAccent,
-            Colors.lightBlue,
-          ],
-          chartType: ChartType.disc,
-          legendOptions: const LegendOptions(
-            showLegendsInRow: true,
-            legendPosition: LegendPosition.bottom,
-            showLegends: true,
-            legendShape: BoxShape.circle,
-            legendTextStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          chartValuesOptions: const ChartValuesOptions(
-              showChartValueBackground: false,
-              showChartValues: true,
-              showChartValuesInPercentage: true,
-              showChartValuesOutside: true,
-              decimalPlaces: 0,
-              chartValueStyle: TextStyle(color: Colors.orangeAccent)),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        ConclusionBar(incomeamt: income, expensamt: expens),
-        if (total > 0)
-          Container(
-            width: MediaQuery.of(context).size.width,
-            color: Colors.purpleAccent,
-            padding: const EdgeInsets.all(10),
+      return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 80,
+          centerTitle: true,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
             child: Text(
-              'เงินคงเหลือ $total บาท',
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white),
+              title,
+              style: const TextStyle(fontSize: 20),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: datathismonth.length,
-              itemBuilder: (BuildContext context, index) {
-                String date = datathismonth[index].Date;
-                List<Note> data = datathismonth[index].data;
-                List<Note?> incomeData =
-                    data.where((Note e) => e.type == 'income').toList();
-                List<Note?> expensData =
-                    data.where((Note e) => e.type == 'expens').toList();
-                debugPrint('incomeData=$incomeData');
-                debugPrint('expensData=$expensData');
-                bool isIncomeDataNotEmpty = incomeData.isNotEmpty;
-                bool isExpensDataNotEmpty = expensData.isNotEmpty;
-                debugPrint(isIncomeDataNotEmpty.toString());
-                debugPrint(isExpensDataNotEmpty.toString());
-                return Column(
-                  key: UniqueKey(),
-                  children: [
-                    Text(
-                      date,
-                      key: UniqueKey(),
-                      textAlign: TextAlign.center,
-                    ),
-                    if (isIncomeDataNotEmpty) textData('รายรับ'),
-                    if (isIncomeDataNotEmpty) listData(incomeData),
-                    if (isExpensDataNotEmpty) textData('รายจ่าย'),
-                    if (isExpensDataNotEmpty) listData(expensData),
-                    const SizedBox(
-                      height: 16,
-                    )
-                  ],
-                );
-              }),
-        )
-      ]),
-    );
+        ),
+        body: ListView(children: [
+          const SizedBox(
+            height: 16,
+          ),
+          PieChart(
+            key: UniqueKey(),
+            dataMap: {
+              'รายจ่าย': expens.toDouble(),
+              'รายรับ': income.toDouble()
+            },
+            chartLegendSpacing: 16,
+            chartRadius: 150,
+            colorList: const [
+              Colors.redAccent,
+              Colors.lightBlue,
+            ],
+            chartType: ChartType.disc,
+            legendOptions: const LegendOptions(
+              showLegendsInRow: true,
+              legendPosition: LegendPosition.bottom,
+              showLegends: true,
+              legendShape: BoxShape.circle,
+              legendTextStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            chartValuesOptions: const ChartValuesOptions(
+                showChartValueBackground: false,
+                showChartValues: true,
+                showChartValuesInPercentage: true,
+                showChartValuesOutside: true,
+                decimalPlaces: 0,
+                chartValueStyle: TextStyle(color: Colors.orangeAccent)),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          ConclusionBar(incomeamt: income, expensamt: expens),
+          if (total > 0)
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.purpleAccent,
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                'เงินคงเหลือ $total บาท',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: datathismonth.length,
+                itemBuilder: (BuildContext context, index) {
+                  String date = datathismonth[index].Date;
+                  List<Note> data = datathismonth[index].data;
+                  List<Note?> incomeData =
+                      data.where((Note e) => e.type == 'income').toList();
+                  List<Note?> expensData =
+                      data.where((Note e) => e.type == 'expens').toList();
+                  debugPrint('incomeData=$incomeData');
+                  debugPrint('expensData=$expensData');
+                  bool isIncomeDataNotEmpty = incomeData.isNotEmpty;
+                  bool isExpensDataNotEmpty = expensData.isNotEmpty;
+                  debugPrint(isIncomeDataNotEmpty.toString());
+                  debugPrint(isExpensDataNotEmpty.toString());
+                  return Column(
+                    key: UniqueKey(),
+                    children: [
+                      Text(
+                        date,
+                        key: UniqueKey(),
+                        textAlign: TextAlign.center,
+                      ),
+                      if (isIncomeDataNotEmpty) textData('รายรับ'),
+                      if (isIncomeDataNotEmpty) listData(incomeData),
+                      if (isExpensDataNotEmpty) textData('รายจ่าย'),
+                      if (isExpensDataNotEmpty) listData(expensData),
+                      const SizedBox(
+                        height: 16,
+                      )
+                    ],
+                  );
+                }),
+          )
+        ]),
+      );
+    } else {
+      return const Center(
+        child: Text('ไม่มีข้อมูล'),
+      );
+    }
   }
 }

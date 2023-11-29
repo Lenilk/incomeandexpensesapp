@@ -45,37 +45,42 @@ class _MainLandScapePageState extends State<MainLandScapePage> {
                     ? Expanded(
                         child:
                             Consumer<Stater>(builder: (context, data, child) {
-                          return PieChart(
-                            key: UniqueKey(),
-                            dataMap: {
-                              'รายจ่าย': data.expensAmount().toDouble(),
-                              'รายรับ': data.incomeAmount().toDouble()
-                            },
-                            chartLegendSpacing: 16,
-                            chartRadius: 250,
-                            colorList: const [
-                              Colors.redAccent,
-                              Colors.lightBlue,
-                            ],
-                            chartType: ChartType.disc,
-                            legendOptions: const LegendOptions(
-                              showLegendsInRow: true,
-                              legendPosition: LegendPosition.bottom,
-                              showLegends: true,
-                              legendShape: BoxShape.circle,
-                              legendTextStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
+                          if (data.incomeAmount().toInt() > 0 ||
+                              data.expensAmount().toInt() > 0) {
+                            return PieChart(
+                              key: UniqueKey(),
+                              dataMap: {
+                                'รายจ่าย': data.expensAmount().toDouble(),
+                                'รายรับ': data.incomeAmount().toDouble()
+                              },
+                              chartLegendSpacing: 16,
+                              chartRadius: 250,
+                              colorList: const [
+                                Colors.redAccent,
+                                Colors.lightBlue,
+                              ],
+                              chartType: ChartType.disc,
+                              legendOptions: const LegendOptions(
+                                showLegendsInRow: true,
+                                legendPosition: LegendPosition.bottom,
+                                showLegends: true,
+                                legendShape: BoxShape.circle,
+                                legendTextStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            chartValuesOptions: const ChartValuesOptions(
-                                showChartValueBackground: false,
-                                showChartValues: true,
-                                showChartValuesInPercentage: true,
-                                showChartValuesOutside: true,
-                                decimalPlaces: 0,
-                                chartValueStyle:
-                                    TextStyle(color: Colors.orangeAccent)),
-                          );
+                              chartValuesOptions: const ChartValuesOptions(
+                                  showChartValueBackground: false,
+                                  showChartValues: true,
+                                  showChartValuesInPercentage: true,
+                                  showChartValuesOutside: true,
+                                  decimalPlaces: 0,
+                                  chartValueStyle:
+                                      TextStyle(color: Colors.orangeAccent)),
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
                         }),
                       )
                     : Expanded(

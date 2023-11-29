@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/function/user.dart';
@@ -62,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.remove('user');
     String? jsonString = pref.getString('Data11');
     String? jsonStringDM = pref.getString('Date11Dm');
     String? userSP = pref.getString('user');
@@ -113,6 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (Platform.isAndroid) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+    }
     return (context.watch<User>().username != '')
         ? const MainPage()
         : const LoginPage();
