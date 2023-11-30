@@ -50,15 +50,18 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Data> dataS = [];
   List<String> dateMark = [];
-
   String user = '';
-  Future<String> fetchData() async {
-    http.Response response =
-        await http.get(Uri.parse('http://192.168.1.229:3000/users'));
+  Future<List<Map<String, dynamic>>> fetchData(String owner) async {
+    Map<String, String> header = {'Content-type': 'application/json'};
+    http.Response response = await http.post(
+        Uri.parse('http://192.168.1.229:3000/login'),
+        headers: header,
+        body: {'username': owner});
     if (response.statusCode == 200) {
-      return response.body;
+      Map<String, dynamic> resBody = json.decode(response.body);
+      return resBody['data'];
     } else {
-      throw Exception('Fail');
+      return [];
     }
   }
 
@@ -110,6 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
       Provider.of<Stater>(context, listen: false).initSetData(dataS, dateMark);
       Provider.of<User>(context, listen: false).setUser(user);
     });
+    if (user != '') {
+      fetchData(user).then((data) {
+        List<Map<String, dynamic>> dataInPr =
+            Provider.of<Stater>(context, listen: false)
+                .data
+                .map((Data e) => e.toJson())
+                .toList();
+                if(data!=dataInPr){
+                  //first must create provider for manage data in offline 
+                  //check if change in offline mode and update data to internet else nothing to do 
+                }
+      });
+    }
   }
 
   @override

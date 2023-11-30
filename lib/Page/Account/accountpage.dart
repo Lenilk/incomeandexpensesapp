@@ -4,6 +4,22 @@ import 'package:provider/provider.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
+  Widget headerText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  Widget detailText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(color: Colors.black87, fontSize: 18),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +35,37 @@ class AccountPage extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-              constraints: const BoxConstraints(maxWidth: 800, minWidth: 400),
+              constraints: const BoxConstraints(
+                  maxWidth: 400, minWidth: 200, maxHeight: 500),
               padding: const EdgeInsets.all(16),
-              child: const Column(
-                children: [Icon(Icons.account_circle_rounded)],
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.account_circle_rounded,
+                    size: 100,
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [headerText('ชื่อผู้ใช้')],
+                          ),
+                          Column(
+                            children: [detailText(username)],
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               )),
         ));
   }
