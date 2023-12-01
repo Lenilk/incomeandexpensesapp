@@ -10,7 +10,6 @@ import 'package:incomeandexpensesapp/function/extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Stater with ChangeNotifier {
-  List todo = [];
   DateTime selectDate = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.month;
   List<Data> data = [
@@ -21,6 +20,15 @@ class Stater with ChangeNotifier {
   int whereday = 0;
   void onSelectPage(int index) {
     selectPage = index;
+  }
+
+  void resetState() async {
+    selectPage = 0;
+    dateMark = [];
+    data = [];
+    final pref = await SharedPreferences.getInstance();
+    pref.remove('Data11');
+    pref.remove('Data11Dm');
   }
 
   String selectDateTitle() {

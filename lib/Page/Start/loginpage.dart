@@ -204,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           }
                         },
-                        child: const Text('เข้าสู้ระบบ'))
+                        child: const Text('เข้าสู่ระบบ'))
                   ],
                 )),
           ),

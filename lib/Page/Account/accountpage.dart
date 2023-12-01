@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:incomeandexpensesapp/function/user.dart';
 import 'package:provider/provider.dart';
 
@@ -59,10 +60,53 @@ class AccountPage extends StatelessWidget {
                             children: [headerText('ชื่อผู้ใช้')],
                           ),
                           Column(
-                            children: [detailText(username)],
+                            children: [
+                              detailText(username),
+                            ],
                           )
                         ],
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                        title:
+                                            const Text('แน่ใจว่าจะออกจากระบบ'),
+                                        actionsAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('ยกเลิก')),
+                                          TextButton(
+                                              onPressed: () {
+                                                context
+                                                    .read<User>()
+                                                    .removeUser();
+                                                context
+                                                    .read<Stater>()
+                                                    .resetState();
+                                                if (Navigator.of(context)
+                                                    .canPop()) {
+                                                  Navigator.of(context).pop();
+                                                }
+                                              },
+                                              child: const Text('ตกลง'))
+                                        ],
+                                      ));
+                            },
+                            child: const Text('ออกจากระบบ')),
+                      ],
                     ),
                   )
                 ],

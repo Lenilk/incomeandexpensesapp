@@ -16,7 +16,7 @@ class User with ChangeNotifier {
 
   void removeUser() {
     username = '';
-    removeUser();
+    removeUserINSP();
     notifyListeners();
   }
 
