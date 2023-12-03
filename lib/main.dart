@@ -120,10 +120,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 .data
                 .map((Data e) => e.toJson())
                 .toList();
-                if(data!=dataInPr){
-                  //first must create provider for manage data in offline 
-                  //check if change in offline mode and update data to internet else nothing to do 
-                }
+        if (data != dataInPr) {
+          //first must create provider for manage data in offline
+          //check if change in offline mode and update data to internet else nothing to do
+        }
       });
     }
   }
