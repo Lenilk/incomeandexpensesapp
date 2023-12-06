@@ -20,10 +20,13 @@ class _LoginPageState extends State<LoginPage> {
   bool haveError = false;
   Future<bool> login(Map<String, dynamic> body) async {
     Map<String, String> header = {'Content-type': 'application/json'};
-    http.Response response = await http.post(
-        Uri.parse('http://192.168.1.229:3000/login'),
-        body: json.encode(body),
-        headers: header);
+    http.Response response = await http
+        .post(Uri.parse('http://192.168.1.229:3000/login'),
+            body: json.encode(body), headers: header)
+        .timeout(
+          const Duration(seconds: 10),
+          onTimeout: () => http.Response('error', 404),
+        );
     if (response.statusCode == 200) {
       Map<String, dynamic> resBody = jsonDecode(response.body);
       bool isSuccess = resBody['success'];
