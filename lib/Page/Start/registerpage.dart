@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:incomeandexpensesapp/function/user.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:incomeandexpensesapp/function/ip.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -24,10 +25,8 @@ class _RegisterPageState extends State<RegisterPage> {
     Map<String, String> header = {
       'Content-type': 'application/json',
     };
-    http.Response response = await http.post(
-        Uri.parse('http://192.168.1.229:3000/createUser'),
-        body: json.encode(body),
-        headers: header);
+    http.Response response = await http.post(Uri.parse('$ip/createUser'),
+        body: json.encode(body), headers: header);
     if (response.statusCode == 200) {
       Map<String, dynamic> resBody = jsonDecode(response.body);
       bool isSuccess = resBody['success'];

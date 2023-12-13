@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:incomeandexpensesapp/function/user.dart';
 import 'package:provider/provider.dart';
+import 'package:incomeandexpensesapp/function/ip.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,8 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> login(Map<String, dynamic> body) async {
     Map<String, String> header = {'Content-type': 'application/json'};
     http.Response response = await http
-        .post(Uri.parse('http://192.168.1.229:3000/login'),
-            body: json.encode(body), headers: header)
+        .post(Uri.parse('$ip/login'), body: json.encode(body), headers: header)
         .timeout(
           const Duration(seconds: 10),
           onTimeout: () => http.Response('error', 404),
