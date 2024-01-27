@@ -4,6 +4,7 @@ import 'package:incomeandexpensesapp/Page/Dashboard/portrait.dart';
 import 'package:incomeandexpensesapp/Page/Main/portrait.dart';
 import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:provider/provider.dart';
+import 'package:incomeandexpensesapp/env.dart' as env;
 
 class PortraitLayout extends StatefulWidget {
   const PortraitLayout({super.key});
@@ -30,19 +31,20 @@ class _PortraitLayoutState extends State<PortraitLayout> {
         const AccountPage()
       ].elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'หน้าหลัก',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.assessment_outlined),
             label: 'แดชบอร์ด',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'ผู้ใช้',
-          ),
+          if (!env.testTime)
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'ผู้ใช้',
+            ),
         ],
         currentIndex: selectedIndex,
         selectedItemColor: Colors.amber[800],

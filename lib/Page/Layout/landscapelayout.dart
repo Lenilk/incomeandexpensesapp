@@ -4,6 +4,7 @@ import 'package:incomeandexpensesapp/Page/Dashboard/landscape.dart';
 import 'package:incomeandexpensesapp/Page/Main/landscape.dart';
 import 'package:incomeandexpensesapp/function/stater.dart';
 import 'package:provider/provider.dart';
+import 'package:incomeandexpensesapp/env.dart' as env;
 
 class LandScapeLayout extends StatefulWidget {
   const LandScapeLayout({super.key});
@@ -79,23 +80,27 @@ class _LandScapeLayoutState extends State<LandScapeLayout> {
                         ],
                       ))),
                 ),
-                Expanded(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        surfaceTintColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
+                if (!env.testTime)
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          surfaceTintColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        onItemTapped(2);
-                      },
-                      child: const Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.account_circle), Text('ผู้ใช้')],
-                      ))),
-                )
+                        onPressed: () {
+                          onItemTapped(2);
+                        },
+                        child: const Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.account_circle),
+                            Text('ผู้ใช้')
+                          ],
+                        ))),
+                  )
               ],
             ),
           )
