@@ -49,13 +49,16 @@ class _LandScapeLayoutState extends State<LandScapeLayout> {
                       onPressed: () {
                         onItemTapped(0);
                       },
-                      child: const Center(
+                      child: Center(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.home),
-                          Text('หน้า'),
-                          Text('หลัก')
+                          Icon(Icons.home,
+                              color: selectedIndex == 0
+                                  ? Colors.amber
+                                  : Colors.purple.shade400),
+                          const Text('หน้า'),
+                          const Text('หลัก')
                         ],
                       ))),
                 ),
@@ -70,13 +73,18 @@ class _LandScapeLayoutState extends State<LandScapeLayout> {
                       onPressed: () {
                         onItemTapped(1);
                       },
-                      child: const Center(
+                      child: Center(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.assessment_outlined),
-                          Text('แดช'),
-                          Text('บอร์ด')
+                          Icon(
+                            Icons.assessment_outlined,
+                            color: selectedIndex == 1
+                                ? Colors.amber
+                                : Colors.purple.shade400,
+                          ),
+                          const Text('แดช'),
+                          const Text('บอร์ด')
                         ],
                       ))),
                 ),

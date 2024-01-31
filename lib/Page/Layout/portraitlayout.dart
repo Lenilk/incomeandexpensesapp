@@ -37,7 +37,9 @@ class _PortraitLayoutState extends State<PortraitLayout> {
             label: 'หน้าหลัก',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.assessment_outlined),
+            icon: Icon(
+              Icons.assessment_outlined,
+            ),
             label: 'แดชบอร์ด',
           ),
           if (!env.testTime)
@@ -47,7 +49,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
             ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.amber,
         onTap: onItemTapped,
       ),
     );
